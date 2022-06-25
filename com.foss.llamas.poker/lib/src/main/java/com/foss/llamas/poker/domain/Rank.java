@@ -1,7 +1,7 @@
 package com.foss.llamas.poker.domain;
 
 public enum Rank {
-	MAX(Integer.MAX_VALUE),
+	MAX,
 	ACE,
 	TWO,
 	THREE,
@@ -17,10 +17,5 @@ public enum Rank {
 	KING,
 	JOKER,
 	OTHER,
-	ANY;
-	
-	private int rankValue;
-	public Rank(int rankValue) {
-		this.rankValue = rankValue;
-	}
+	ANY
 }
