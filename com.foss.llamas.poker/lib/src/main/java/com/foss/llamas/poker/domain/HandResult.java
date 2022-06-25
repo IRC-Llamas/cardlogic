@@ -1,30 +1,23 @@
 package com.foss.llamas.poker.domain;
 
-public enum HandResult {
-	BETTER_THAN_ROYAL_FLUSH(true),
-	ROYAL_FLUSH(false),
-	STRAIGHT_FLUSH(false),
-	FOUR_KIND(false),
-	FULL_HOUSE(false),
-	FLUSH(false),
-	STRAIGHT(false),
-	FOUR_FLUSH(true),
-	THREE_KIND(false),
-	TWO_PAIR(false),
-	PAIR(false),
-	HIGH(false),
-	NONE(false);
-	
-	private boolean custom;
-	HandResult(boolean custom) {
-		this.custom = custom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
+public abstract class HandResult implements Predicate<List<Card>> {
+
+	private List<Card> cards = new ArrayList<>();
+	private HandResultType handResultType;
+	public HandResult(HandResultType handResultType) {
+		this.handResultType = handResultType;
 	}
-	
-	public boolean isCustom() {
-		return custom;
+	protected void setCards(List<Card> cards) {
+		this.cards = cards;
 	}
-	
-	public void setCustom(boolean custom) {
-		this.custom = custom;
+	public List<Card> getCards() {
+		return cards;
+	}
+	public HandResultType getHandResultType() {
+		return handResultType;
 	}
 }
