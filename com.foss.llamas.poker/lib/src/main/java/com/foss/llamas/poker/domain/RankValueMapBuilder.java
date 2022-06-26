@@ -13,6 +13,9 @@ public class RankValueMapBuilder {
 	private Multimap<Rank, Integer> map = ArrayListMultimap.create();
 	
 	private List<Plugin<Multimap<Rank, Integer>>> plugins = new ArrayList<>();
+	public static final RankValueMapBuilder builder() {
+		return new RankValueMapBuilder();
+	}
 	public RankValueMapBuilder addStandardPokerMappings() {
 		return this
 		.addMapping(Rank.JOKER, -1)

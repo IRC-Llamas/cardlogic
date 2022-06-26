@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeckBuilder {
-	private List<Card> deck = new ArrayList<>();
+	private List<StandardCard> deck = new ArrayList<>();
 	
-	private List<Plugin<List<Card>>> plugins = new ArrayList<>();
+	private List<Plugin<List<StandardCard>>> plugins = new ArrayList<>();
 	
-	public DeckBuilder addPlugin(Plugin<List<Card>> plugin) {
+	public DeckBuilder addPlugin(Plugin<List<StandardCard>> plugin) {
 		plugins.add(plugin);
 		return this;
 	}
@@ -32,26 +32,26 @@ public class DeckBuilder {
 	
 	public DeckBuilder addRank(Rank rank) {
 		return this
-		.addCard(Card.build(rank, Suit.CLUBS))
-		.addCard(Card.build(rank, Suit.SPADES))
-		.addCard(Card.build(rank, Suit.HEARTS))
-		.addCard(Card.build(rank, Suit.DIAMONDS));
+		.addCard(StandardCard.build(rank, Suit.CLUBS))
+		.addCard(StandardCard.build(rank, Suit.SPADES))
+		.addCard(StandardCard.build(rank, Suit.HEARTS))
+		.addCard(StandardCard.build(rank, Suit.DIAMONDS));
 	}
 	
 	public DeckBuilder addJokers(int count) {
 		for (int x = 0; x < count; x++) {
-			addCard(Card.build(Rank.JOKER, Suit.JOKER));
+			addCard(StandardCard.build(Rank.JOKER, Suit.JOKER));
 		}
 		return this;
 	}
 	
-	public DeckBuilder addCard(Card card) {
+	public DeckBuilder addCard(StandardCard card) {
 		deck.add(card);
 		return this;
 	}
 	
-	public List<Card> build() {
-		for (Plugin<List<Card>> plugin : plugins) {
+	public List<StandardCard> build() {
+		for (Plugin<List<StandardCard>> plugin : plugins) {
 			plugin.apply(deck);
 		}
 		
