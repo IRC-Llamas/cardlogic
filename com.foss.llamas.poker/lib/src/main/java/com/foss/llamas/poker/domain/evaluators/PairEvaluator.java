@@ -43,16 +43,8 @@ public class PairEvaluator extends HandResult {
 	}
 	@Override
 	public boolean test(List<Card> arg0) {
-		/*Map<Integer, Rank> sortedRank = new HashMap<>();
-		
-		for (Rank rank : rankValueMap.keySet()) {
-			Integer highestValue = Collections.max(rankValueMap.get(rank));
-		}
-		Map<Card, Rank> cards = new HashMap<>();*/
 
-		//List<Entry<Rank, Integer>> cardCountMap = new ArrayList<>();
 		List<Card> cardQueue = new LinkedList<>(arg0);
-		//queue.addAll(arg0);
 		
 		List<Card> wildCards = new LinkedList<>();
 		
@@ -69,71 +61,68 @@ public class PairEvaluator extends HandResult {
         // Step 2: Sort the remaining cards by rank.
         Collections.sort(cardQueue, CardComparator.get(rankValueMap));
 		
-		List<Card> topFiveCards = new ArrayList<>();
-		
-		topFiveCards.addAll(wildCards);
+	List<Card> topFiveCards = new ArrayList<>();
 
-		iter = cardQueue.listIterator();
-		
-		while (iter.hasNext() && topFiveCards.size() < 5) {
-			Card card = iter.next();
+	topFiveCards.addAll(wildCards);
+
+	iter = cardQueue.listIterator();
+
+	while (iter.hasNext() && topFiveCards.size() < 5) {
+		Card card = iter.next();
+		iter.remove();
+		topFiveCards.add(card);
+	}
+
+	setCards(new ArrayList<>(topFiveCards));
+
+	// Step 3: Identify which rank values have pairs
+	LinkedHashMap<Integer, ComparableAtomicInteger> pairMap = new LinkedHashMap<>();
+
+	iter = topFiveCards.listIterator();
+	while (iter.hasNext()) {
+
+		Card card = iter.next();
+		if (!card.isWild()) {
 			iter.remove();
-			topFiveCards.add(card);
+
+			Rank rank = card.getRank();
+
+			Integer valueToCheckFor = Collections.max(rankValueMap.get(rank));
+
+			if (pairMap.containsKey(valueToCheckFor)) {
+				pairMap.get(valueToCheckFor).incrementAndGet();
+			}
+			else {
+				pairMap.put(valueToCheckFor, new ComparableAtomicInteger(1));
+			}
 		}
-		
-		setCards(new ArrayList<>(topFiveCards));
-		
-		// Step 3: Identify which rank values have pairs
-		LinkedHashMap<Integer, ComparableAtomicInteger> pairMap = new LinkedHashMap<>();
-		
+	}
+
+	sortByValue(pairMap);
+
+	if (!topFiveCards.isEmpty() && !pairMap.isEmpty()) {
+
 		iter = topFiveCards.listIterator();
 		while (iter.hasNext()) {
 
 			Card card = iter.next();
-			if (!card.isWild()) {
+			if (card.isWild()) {
 				iter.remove();
-				
-				Rank rank = card.getRank();
 
-				Integer valueToCheckFor = Collections.max(rankValueMap.get(rank));
-				
-				if (pairMap.containsKey(valueToCheckFor)) {
-					pairMap.get(valueToCheckFor).incrementAndGet();
-				}
-				else {
-					pairMap.put(valueToCheckFor, new ComparableAtomicInteger(1));
-				}
+				pairMap.entrySet().iterator().next().getValue().incrementAndGet();
 			}
 		}
-		
-		sortByValue(pairMap);
-		
-		if (!topFiveCards.isEmpty() && !pairMap.isEmpty()) {
-
-			iter = topFiveCards.listIterator();
-			while (iter.hasNext()) {
-
-				Card card = iter.next();
-				if (card.isWild()) {
-					iter.remove();
-				
-					pairMap.entrySet().iterator().next().getValue().incrementAndGet();
-				}
-			}
-		}
-		Iterator<Entry<Integer, ComparableAtomicInteger>> pairIter = pairMap.entrySet().iterator();
-		
-		while (pairIter.hasNext()) {
-			if (pairIter.next().getValue().get() > 1) {
-				return true;
-			}
-		}
-		
-		// TODO Needs to check for the highest pair and additionally the high cards
-		// and call {@link #setCards} and set the value to the highest pair and then
-		// the highest other three cards, based on the Rank Value Map.
-		return false;
 	}
+	Iterator<Entry<Integer, ComparableAtomicInteger>> pairIter = pairMap.entrySet().iterator();
+
+	while (pairIter.hasNext()) {
+		if (pairIter.next().getValue().get() > 1) {
+			return true;
+		}
+	}
+
+	return false;
+}
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
         list.sort(Entry.comparingByValue());
