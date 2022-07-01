@@ -35,7 +35,7 @@ public class HandEvaluatorBuilder {
 	
 	}
 
-	private static boolean isSuit(StandardCard card, Suit suit) {
+	private static boolean isSuit(Card card, Suit suit) {
 		return Objects.equals(suit, card.getSuit()) ||
 				Objects.equals(Suit.JOKER, card.getSuit()) ||
 				Objects.equals(Suit.ANY, card.getSuit()) ||
@@ -43,15 +43,15 @@ public class HandEvaluatorBuilder {
 	
 	}
 	
-	private static List<StandardCard> checkRoyalFlush(List<StandardCard> arg0, Suit suit) {
-		Deque<StandardCard> suitedCards = new LinkedList<>(arg0.stream().filter(card -> isSuit(card, suit)).collect(Collectors.toList()));
+	private static List<Card> checkRoyalFlush(List<Card> arg0, Suit suit) {
+		Deque<Card> suitedCards = new LinkedList<>(arg0.stream().filter(card -> isSuit(card, suit)).collect(Collectors.toList()));
 		
-		List<StandardCard> potentialRoyalFlush = new ArrayList<>();
+		List<Card> potentialRoyalFlush = new ArrayList<>();
 		
-		Iterator<StandardCard> cardIterator = suitedCards.iterator();
+		Iterator<Card> cardIterator = suitedCards.iterator();
 		
 		while (cardIterator.hasNext() && potentialRoyalFlush.size() < 5) {
-			StandardCard card = cardIterator.next();
+			Card card = cardIterator.next();
 			boolean isRoyal = 
 			Objects.equals(card.getRank(), Rank.ACE) ||
 			Objects.equals(card.getRank(), Rank.KING) ||
@@ -70,7 +70,7 @@ public class HandEvaluatorBuilder {
 		cardIterator = suitedCards.iterator();
 		
 		while (cardIterator.hasNext() && potentialRoyalFlush.size() < 5) {
-			StandardCard card = cardIterator.next();
+			Card card = cardIterator.next();
 			boolean isRoyal = 
 				Objects.equals(card.getRank(), Rank.JOKER) ||
 				Objects.equals(card.getRank(), Rank.ANY) ||
@@ -92,10 +92,10 @@ public class HandEvaluatorBuilder {
 		HandResult handResult = new HandResult(HandResultType.PAIR) {
 			
 			@Override
-			public boolean test(List<StandardCard> arg0) {
+			public boolean test(List<Card> arg0) {
 				// TODO: Use rankValueMap to find the highest pair.
 				Map<Rank, AtomicInteger> rankMap = new HashMap<>();
-				for (StandardCard card : arg0) {
+				for (Card card : arg0) {
 					if (rankMap.containsKey(card.getRank())) {
 						rankMap.get(card.getRank()).getAndIncrement();
 					}
@@ -123,8 +123,8 @@ public class HandEvaluatorBuilder {
 		HandResult handResult = new HandResult(HandResultType.ROYAL_FLUSH) {
 			
 			@Override
-			public boolean test(List<StandardCard> arg0) {
-				List<StandardCard> royalFlush = checkRoyalFlush(arg0, Suit.CLUBS);
+			public boolean test(List<Card> arg0) {
+				List<Card> royalFlush = checkRoyalFlush(arg0, Suit.CLUBS);
 				if (royalFlush.size() == 5) {
 					setCards(royalFlush);
 					return true;

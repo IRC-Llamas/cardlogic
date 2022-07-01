@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeckBuilder {
-	private List<StandardCard> deck = new ArrayList<>();
+	private List<Card> deck = new ArrayList<>();
 	
-	private List<Plugin<List<StandardCard>>> plugins = new ArrayList<>();
+	private List<Plugin<List<Card>>> plugins = new ArrayList<>();
 	
-	public DeckBuilder addPlugin(Plugin<List<StandardCard>> plugin) {
+	public DeckBuilder addPlugin(Plugin<List<Card>> plugin) {
 		plugins.add(plugin);
 		return this;
 	}
@@ -45,13 +45,13 @@ public class DeckBuilder {
 		return this;
 	}
 	
-	public DeckBuilder addCard(StandardCard card) {
+	public DeckBuilder addCard(Card card) {
 		deck.add(card);
 		return this;
 	}
 	
-	public List<StandardCard> build() {
-		for (Plugin<List<StandardCard>> plugin : plugins) {
+	public List<Card> build() {
+		for (Plugin<List<Card>> plugin : plugins) {
 			plugin.apply(deck);
 		}
 		
