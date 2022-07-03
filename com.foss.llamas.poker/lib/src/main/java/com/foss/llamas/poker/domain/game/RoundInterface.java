@@ -23,6 +23,10 @@ public interface RoundInterface {
 	
 	void nextTurn();
 	
+	Player getCurrentTurnPlayer();
+	
+	Player getNextTurnPlayer();
+	
 	void nextRound();
 	
 	boolean isPotSatisfied();

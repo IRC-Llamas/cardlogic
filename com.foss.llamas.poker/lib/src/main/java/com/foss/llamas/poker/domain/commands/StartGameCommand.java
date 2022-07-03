@@ -2,6 +2,7 @@ package com.foss.llamas.poker.domain.commands;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
+import com.beust.jcommander.ParametersDelegate;
 
 @Parameters(commandNames = {"startgame"}, separators = "=")
 public class StartGameCommand {
@@ -19,4 +20,7 @@ public class StartGameCommand {
 	
 	@Parameter(names = "--join-delay")
 	private int joinDelay = 30;
+	
+	@ParametersDelegate
+	private CommandDelegate delegate = new CommandDelegate();
 }
