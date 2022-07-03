@@ -10,5 +10,15 @@ public class Player {
 	// https://www.baeldung.com/java-money-and-currency
 	private BigDecimal availableMoney;
 	
+	private int gamesPlayed;
 	
+	private int gamesWon;
+	
+	private int gamesTied;
+	
+	private int gamesLost;
+	
+	private BigDecimal totalWinnings;
+	
+	private BigDecimal totalLosses;
 }

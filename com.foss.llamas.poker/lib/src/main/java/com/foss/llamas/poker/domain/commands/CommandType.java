@@ -15,11 +15,11 @@ public enum CommandType {
 	
 	// External Commands
 	CHECKMONEY,
-	GIVEMONEY,
 	POKERSTATS,
 	PLAYERSETTING,
 	
 	// Admin Commands
+	TAKEMONEY,
 	GIVEMONEY_ALL,
 	SETMONEY,
 	RESETPLAYER,

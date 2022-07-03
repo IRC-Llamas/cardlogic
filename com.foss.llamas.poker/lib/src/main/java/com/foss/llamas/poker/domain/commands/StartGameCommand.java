@@ -16,4 +16,7 @@ public class StartGameCommand {
 	// NOTE: This cannot be greater than 9.
 	@Parameter(names = "--max-players")
 	private int maxPlayers = 9;
+	
+	@Parameter(names = "--join-delay")
+	private int joinDelay = 30;
 }
