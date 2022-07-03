@@ -50,7 +50,7 @@ public class PairEvaluator extends HandResult {
 		// Every wild card means there is a duplicate.
 		factorWildCards(topFiveCards, pairMap);
 		
-		Iterator<Entry<Integer, ComparableAtomicInteger>> pairIter = pairMap.entrySet().iterator();
+		var pairIter = pairMap.entrySet().iterator();
 
 		while (pairIter.hasNext()) {
 			if (pairIter.next().getValue().get() > 1) {
