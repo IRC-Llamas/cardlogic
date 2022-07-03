@@ -18,13 +18,14 @@ import com.google.common.collect.Multimap;
 public class MultiplesEvaluator extends HandResult {
 
 	private int count;
-	public MultiplesEvaluator(int count, Multimap<Rank, Integer> rankValueMap) {
-		super(HandResultType.PAIR, rankValueMap);
+	
+	public MultiplesEvaluator(HandResultType handResultType, int count, Multimap<Rank, Integer> rankValueMap) {
+		super(handResultType, rankValueMap);
 		this.count = count;
 	}
 
-	public MultiplesEvaluator(int count) {
-		super(HandResultType.PAIR, RankValueMapBuilder.builder().addStandardPokerMappings().build());
+	public MultiplesEvaluator(HandResultType handResultType, int count) {
+		super(handResultType, RankValueMapBuilder.builder().addStandardPokerMappings().build());
 		this.count = count;
 	}
 
