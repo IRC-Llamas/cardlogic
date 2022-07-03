@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import com.google.common.collect.Multimap;
@@ -119,6 +120,17 @@ public abstract class HandResult implements Predicate<List<Card>> {
 				}
 			}
 		}
+	}
+	
+	protected static boolean isDuplicateRankCount(int count, Map<Integer, ComparableAtomicInteger> pairMap) {
+		var pairIter = pairMap.entrySet().iterator();
+
+		while (pairIter.hasNext()) {
+			if (pairIter.next().getValue().get() >= count) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

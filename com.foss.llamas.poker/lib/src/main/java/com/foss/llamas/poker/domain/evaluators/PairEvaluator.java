@@ -2,11 +2,9 @@ package com.foss.llamas.poker.domain.evaluators;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 import com.foss.llamas.poker.domain.Card;
 import com.foss.llamas.poker.domain.CardComparator;
 import com.foss.llamas.poker.domain.ComparableAtomicInteger;
@@ -50,14 +48,7 @@ public class PairEvaluator extends HandResult {
 		// Every wild card means there is a duplicate.
 		factorWildCards(topFiveCards, pairMap);
 		
-		var pairIter = pairMap.entrySet().iterator();
-
-		while (pairIter.hasNext()) {
-			if (pairIter.next().getValue().get() > 1) {
-				return true;
-			}
-		}
-
-		return false;
+		// Return true if we find a pair.
+		return isDuplicateRankCount(2, pairMap);
 	}
 }
