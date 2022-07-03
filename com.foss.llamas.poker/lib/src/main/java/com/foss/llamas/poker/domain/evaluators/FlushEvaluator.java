@@ -13,12 +13,18 @@ import com.foss.llamas.poker.domain.Card;
 import com.foss.llamas.poker.domain.CardComparator;
 import com.foss.llamas.poker.domain.HandResult;
 import com.foss.llamas.poker.domain.HandResultType;
+import com.foss.llamas.poker.domain.Rank;
 import com.foss.llamas.poker.domain.Suit;
+import com.google.common.collect.Multimap;
 
 public class FlushEvaluator extends HandResult {
 
-	protected FlushEvaluator() {
+	public FlushEvaluator() {
 		super(HandResultType.FLUSH);
+	}
+
+	public FlushEvaluator(Multimap<Rank, Integer> rankValueMap) {
+		super(HandResultType.FLUSH, rankValueMap);
 	}
 
 	@Override
