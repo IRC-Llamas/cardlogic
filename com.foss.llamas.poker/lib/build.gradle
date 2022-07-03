@@ -28,8 +28,12 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.beust/jcommander
     implementation group: 'com.beust', name: 'jcommander', version: '1.82'
-// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+	// https://mvnrepository.com/artifact/org.javamoney.moneta/moneta-core
+	implementation group: 'org.javamoney.moneta', name: 'moneta-core', version: '1.4.2'
 
 }
 
