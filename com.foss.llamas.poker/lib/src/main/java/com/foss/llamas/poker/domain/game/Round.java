@@ -7,6 +7,15 @@ import java.util.Map;
 
 import com.foss.llamas.poker.domain.Card;
 import com.foss.llamas.poker.domain.Deck;
+import com.foss.llamas.poker.domain.commands.BetCommand;
+import com.foss.llamas.poker.domain.commands.CallCommand;
+import com.foss.llamas.poker.domain.commands.CheckCommand;
+import com.foss.llamas.poker.domain.commands.FoldCommand;
+import com.foss.llamas.poker.domain.commands.MuckCommand;
+import com.foss.llamas.poker.domain.commands.RaiseCommand;
+import com.foss.llamas.poker.domain.commands.ShowCommand;
+
+import io.reactivex.rxjava3.core.Observable;
 
 public class Round implements RoundInterface {
 	private RoundState roundState;
@@ -50,24 +59,6 @@ public class Round implements RoundInterface {
 	}
 
 	@Override
-	public Map<Player, BigDecimal> getPot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map<Player, BigDecimal> getUnsatisfiedPot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BigDecimal getPotSize() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int getRoundCount() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -97,6 +88,72 @@ public class Round implements RoundInterface {
 
 	@Override
 	public TurnType getNextTurnType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IPot getPot() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<FoldCommand> onFold() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<MuckCommand> onMuck() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<ShowCommand> onShow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<CallCommand> onCall() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<RaiseCommand> onRaise() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<BetCommand> onBet() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<CheckCommand> onCheck() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<Player> onNextPlayerTurn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<TurnType> onNextRoundTurn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Observable<RoundCompletionDetails> onRoundComplete() {
 		// TODO Auto-generated method stub
 		return null;
 	}
