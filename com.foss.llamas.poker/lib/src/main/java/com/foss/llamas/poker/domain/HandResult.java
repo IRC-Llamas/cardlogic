@@ -11,7 +11,7 @@ public abstract class HandResult implements Predicate<List<Card>> {
 	public HandResult(HandResultType handResultType) {
 		this.handResultType = handResultType;
 	}
-	protected void setCards(List<Card> cards) {
+	public void setCards(List<Card> cards) {
 		this.cards = cards;
 	}
 	public List<Card> getCards() {

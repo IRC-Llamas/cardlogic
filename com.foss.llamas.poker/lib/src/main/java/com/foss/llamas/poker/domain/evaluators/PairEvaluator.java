@@ -32,106 +32,108 @@ import com.google.common.collect.Multimap;
 public class PairEvaluator extends HandResult {
 
 	private Multimap<Rank, Integer> rankValueMap;
+
 	public PairEvaluator(Multimap<Rank, Integer> rankValueMap) {
 		super(HandResultType.PAIR);
 		this.rankValueMap = rankValueMap;
 	}
+
 	public PairEvaluator() {
 		super(HandResultType.PAIR);
-		this.rankValueMap = RankValueMapBuilder.builder()
-			.addStandardPokerMappings().build();
+		this.rankValueMap = RankValueMapBuilder.builder().addStandardPokerMappings().build();
 	}
+
 	@Override
 	public boolean test(List<Card> arg0) {
 
 		List<Card> cardQueue = new LinkedList<>(arg0);
-		
+
 		List<Card> wildCards = new LinkedList<>();
-		
+
 		// Step 1: Collect the wild cards.
-        ListIterator<Card> iter = cardQueue.listIterator();
-        while(iter.hasNext()){
-        	Card card = iter.next();
-            if (card.isWild()) {
-                iter.remove();
-                wildCards.add(card);
-            }
-        }
-        
-        // Step 2: Sort the remaining cards by rank.
-        Collections.sort(cardQueue, CardComparator.get(rankValueMap));
-		
-	List<Card> topFiveCards = new ArrayList<>();
-
-	topFiveCards.addAll(wildCards);
-
-	iter = cardQueue.listIterator();
-
-	while (iter.hasNext() && topFiveCards.size() < 5) {
-		Card card = iter.next();
-		iter.remove();
-		topFiveCards.add(card);
-	}
-
-	setCards(new ArrayList<>(topFiveCards));
-
-	// Step 3: Identify which rank values have pairs
-	LinkedHashMap<Integer, ComparableAtomicInteger> pairMap = new LinkedHashMap<>();
-
-	iter = topFiveCards.listIterator();
-	while (iter.hasNext()) {
-
-		Card card = iter.next();
-		if (!card.isWild()) {
-			iter.remove();
-
-			Rank rank = card.getRank();
-
-			Integer valueToCheckFor = Collections.max(rankValueMap.get(rank));
-
-			if (pairMap.containsKey(valueToCheckFor)) {
-				pairMap.get(valueToCheckFor).incrementAndGet();
-			}
-			else {
-				pairMap.put(valueToCheckFor, new ComparableAtomicInteger(1));
+		ListIterator<Card> iter = cardQueue.listIterator();
+		while (iter.hasNext()) {
+			Card card = iter.next();
+			if (card.isWild()) {
+				iter.remove();
+				wildCards.add(card);
 			}
 		}
-	}
 
-	sortByValue(pairMap);
+		// Step 2: Sort the remaining cards by rank.
+		Collections.sort(cardQueue, CardComparator.get(rankValueMap));
 
-	if (!topFiveCards.isEmpty() && !pairMap.isEmpty()) {
+		List<Card> topFiveCards = new ArrayList<>();
+
+		topFiveCards.addAll(wildCards);
+
+		iter = cardQueue.listIterator();
+
+		while (iter.hasNext() && topFiveCards.size() < 5) {
+			Card card = iter.next();
+			iter.remove();
+			topFiveCards.add(card);
+		}
+
+		setCards(new ArrayList<>(topFiveCards));
+
+		// Step 3: Identify which rank values have pairs
+		LinkedHashMap<Integer, ComparableAtomicInteger> pairMap = new LinkedHashMap<>();
 
 		iter = topFiveCards.listIterator();
 		while (iter.hasNext()) {
 
 			Card card = iter.next();
-			if (card.isWild()) {
+			if (!card.isWild()) {
 				iter.remove();
 
-				pairMap.entrySet().iterator().next().getValue().incrementAndGet();
+				Rank rank = card.getRank();
+
+				Integer valueToCheckFor = Collections.max(rankValueMap.get(rank));
+
+				if (pairMap.containsKey(valueToCheckFor)) {
+					pairMap.get(valueToCheckFor).incrementAndGet();
+				} else {
+					pairMap.put(valueToCheckFor, new ComparableAtomicInteger(1));
+				}
 			}
 		}
-	}
-	Iterator<Entry<Integer, ComparableAtomicInteger>> pairIter = pairMap.entrySet().iterator();
 
-	while (pairIter.hasNext()) {
-		if (pairIter.next().getValue().get() > 1) {
-			return true;
+		sortByValue(pairMap);
+
+		if (!topFiveCards.isEmpty() && !pairMap.isEmpty()) {
+
+			iter = topFiveCards.listIterator();
+			while (iter.hasNext()) {
+
+				Card card = iter.next();
+				if (card.isWild()) {
+					iter.remove();
+
+					pairMap.entrySet().iterator().next().getValue().incrementAndGet();
+				}
+			}
 		}
+		Iterator<Entry<Integer, ComparableAtomicInteger>> pairIter = pairMap.entrySet().iterator();
+
+		while (pairIter.hasNext()) {
+			if (pairIter.next().getValue().get() > 1) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
-	return false;
-}
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
-        list.sort(Entry.comparingByValue());
+	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+		List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
+		list.sort(Entry.comparingByValue());
 
-        Map<K, V> result = new LinkedHashMap<>();
-        for (Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
+		Map<K, V> result = new LinkedHashMap<>();
+		for (Entry<K, V> entry : list) {
+			result.put(entry.getKey(), entry.getValue());
+		}
 
-        return result;
-    }
+		return result;
+	}
 }
