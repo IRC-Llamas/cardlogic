@@ -1,21 +1,36 @@
 package com.foss.llamas.poker.domain.cardformatter;
 
-import java.util.Objects;
-
 import com.foss.llamas.poker.domain.Card;
-import com.foss.llamas.poker.domain.Rank;
 
-public class BasicUnicodeCardStringFormatter implements CardStringFormatter {
+public class AsciiCardStringFormatter implements CardStringFormatter {
 
 	@Override
 	public String apply(Card card) {
-		String result;
 		String suit = null;
 		String rank = null;
+		String result = null;
 		if (card.isWild()) {
-			result = "[*]";
+			result = "[WILD]";
 		}
 		else {
+			switch (card.getSuit()) {
+			case CLUBS:
+				suit = "CLUBS";
+				break;
+			case DIAMONDS:
+				suit = "DIAMONDS";
+				break;
+			case HEARTS:
+				suit = "HEARTS";
+				break;
+			case SPADES:
+				suit = "SPADES";
+				break;
+			default:
+				suit = "?";
+				break;
+			
+			}
 			switch (card.getRank()) {
 			case ACE:
 				rank = "A";
@@ -61,24 +76,7 @@ public class BasicUnicodeCardStringFormatter implements CardStringFormatter {
 				break;
 			
 			}
-			switch (card.getSuit()) {
-			case CLUBS:
-				suit = "♣";
-				break;
-			case DIAMONDS:
-				suit = "♦";
-				break;
-			case HEARTS:
-				suit = "♥";
-				break;
-			case SPADES:
-				suit = "♠";
-				break;
-			default:
-				break;
-			
-			}
-			result = "[" + rank + suit + "]";
+			result = "[" + rank + "-" + suit + "]";
 		}
 		return result;
 	}
