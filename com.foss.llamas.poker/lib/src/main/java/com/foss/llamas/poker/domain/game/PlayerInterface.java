@@ -2,6 +2,8 @@ package com.foss.llamas.poker.domain.game;
 
 import java.math.BigDecimal;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public interface PlayerInterface {
 
 	/**
@@ -36,4 +38,8 @@ public interface PlayerInterface {
 	BigDecimal getTotalWinnings();
 	
 	BigDecimal getTotalLosses();
+	
+	void sendMessage(GameMessageInterface message);
+	
+	Observable<GameMessageInterface> onMessageReceived();
 }

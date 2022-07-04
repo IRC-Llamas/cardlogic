@@ -8,6 +8,7 @@ import com.foss.llamas.poker.domain.commands.JoinGameCommand;
 import com.foss.llamas.poker.domain.commands.LeaveGameCommand;
 import com.foss.llamas.poker.domain.commands.StartGameCommand;
 import com.foss.llamas.poker.domain.game.GameEventManagerInterface;
+import com.foss.llamas.poker.domain.game.Player;
 import com.foss.llamas.poker.domain.game.RoundInterface;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -20,4 +21,6 @@ public interface GameInterface {
 	GameState getGameState();
 	
 	GameEventManagerInterface getGameEventManager();
+	
+	Player getStartingPlayer();
 }

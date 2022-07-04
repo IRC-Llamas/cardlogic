@@ -6,5 +6,5 @@ import java.util.Map;
 public class RoundCompletionDetails {
 	private Map<Player, BigDecimal> potWinnings;
 	
-	private TurnType finishTurn;
+	private RoundType finishTurn;
 }

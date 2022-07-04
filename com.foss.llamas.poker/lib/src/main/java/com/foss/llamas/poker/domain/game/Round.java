@@ -5,11 +5,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.foss.llamas.poker.GameInterface;
 import com.foss.llamas.poker.domain.Card;
 import com.foss.llamas.poker.domain.Deck;
 
 public class Round implements RoundInterface {
-	private RoundState roundState;
 	
 	private Map<Player, Boolean> players = new LinkedHashMap<>();
 	
@@ -68,18 +68,6 @@ public class Round implements RoundInterface {
 	}
 
 	@Override
-	public TurnType getTurnType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public TurnType getNextTurnType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public IPot getPot() {
 		// TODO Auto-generated method stub
 		return null;
@@ -87,6 +75,30 @@ public class Round implements RoundInterface {
 
 	@Override
 	public RoundEventManagerInterface getRoundEventManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GameInterface getGame() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TurnManager getTurnManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RoundType getRoundType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RoundType getNextRoundType() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,6 +1,7 @@
 package com.foss.llamas.poker.domain.game;
 
 import com.foss.llamas.poker.GameInterface;
+import com.foss.llamas.poker.domain.GameState;
 import com.foss.llamas.poker.domain.commands.CancelGameCommand;
 import com.foss.llamas.poker.domain.commands.JoinGameCommand;
 import com.foss.llamas.poker.domain.commands.LeaveGameCommand;
@@ -19,7 +20,14 @@ public interface GameEventManagerInterface {
 	
 	Observable<LeaveGameCommand> onLeaveGame();
 	
-	void startGame(StartGameCommand command) throws UnsupportedOperationException;
+	default void startGame(StartGameCommand command) throws UnsupportedOperationException {
+		if (getGame().getGameState() == GameState.INACTIVE) {
+			fireStartGame(command);
+		}
+		else {
+			throw new UnsupportedOperationException("Game state must be inactive.");
+		}
+	}
 	
 	void cancelGame(CancelGameCommand command) throws UnsupportedOperationException;
 	
@@ -27,4 +35,11 @@ public interface GameEventManagerInterface {
 	
 	void leaveGame(LeaveGameCommand command) throws UnsupportedOperationException;
 	
+	void fireStartGame(StartGameCommand command);
+	
+	void fireCancelGameCommand(CancelGameCommand command);
+	
+	void fireJoinGameCommand(JoinGameCommand command);
+	
+	void fireLeaveGameCommand(LeaveGameCommand command);
 }

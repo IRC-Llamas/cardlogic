@@ -7,6 +7,7 @@ import com.foss.llamas.poker.domain.commands.FoldCommand;
 import com.foss.llamas.poker.domain.commands.MuckCommand;
 import com.foss.llamas.poker.domain.commands.RaiseCommand;
 import com.foss.llamas.poker.domain.commands.ShowCommand;
+import com.foss.llamas.poker.domain.commands.ViewCardsCommand;
 
 import io.reactivex.rxjava3.core.Observable;
 
@@ -18,7 +19,8 @@ public interface RoundEventManagerInterface {
 	Observable<RaiseCommand> onRaise();
 	Observable<BetCommand> onBet();
 	Observable<CheckCommand> onCheck();
+	Observable<ViewCardsCommand> onPeek();
 	Observable<Player> onNextPlayerTurn();
-	Observable<TurnType> onNextRoundTurn();
+	Observable<RoundType> onNextRoundTurn();
 	Observable<RoundCompletionDetails> onRoundComplete();
 }

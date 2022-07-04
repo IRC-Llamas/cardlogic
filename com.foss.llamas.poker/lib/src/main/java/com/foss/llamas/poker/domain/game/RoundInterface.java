@@ -3,6 +3,7 @@ package com.foss.llamas.poker.domain.game;
 import java.util.List;
 import java.util.Map;
 
+import com.foss.llamas.poker.GameInterface;
 import com.foss.llamas.poker.domain.Card;
 import com.foss.llamas.poker.domain.Deck;
 
@@ -21,20 +22,17 @@ public interface RoundInterface {
 	
 	void leave(Player player);
 	
-	void nextTurn();
-	
-	Player getCurrentTurnPlayer();
-	
-	Player getNextTurnPlayer();
-	
 	void nextRound();
 	
 	boolean isPotSatisfied();
 	
-	TurnType getTurnType();
-	
-	TurnType getNextTurnType();
-
 	RoundEventManagerInterface getRoundEventManager();
 	
+	GameInterface getGame();
+	
+	TurnManager getTurnManager();
+	
+	RoundType getRoundType();
+	
+	RoundType getNextRoundType();
 }

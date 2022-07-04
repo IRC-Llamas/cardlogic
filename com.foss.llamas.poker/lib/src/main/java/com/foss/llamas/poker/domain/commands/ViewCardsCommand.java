@@ -1,15 +1,11 @@
 package com.foss.llamas.poker.domain.commands;
 
-import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.ParametersDelegate;
 
-@Parameters(commandNames = "checkmoney")
-public class CheckMoneyCommand {
+@Parameters(commandNames = "peek")
+public class ViewCardsCommand {
 
-	@Parameter
-	private String playerName;
-	
 	@ParametersDelegate
 	private CommandDelegate delegate = new CommandDelegate();
 }
