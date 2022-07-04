@@ -21,6 +21,10 @@ public class Round implements RoundInterface {
 	
 	private List<Card> burnCards;
 	
+	private Map<Player, List<Card>> holeCards;
+	
+	private List<Card> communityCards;
+	
 	public void join(Player player) {
 		
 	}
