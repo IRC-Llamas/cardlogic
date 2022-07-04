@@ -1,6 +1,6 @@
 package com.foss.llamas.poker.domain.game;
 
-public interface TurnManager {
+public interface TurnManagerInterface {
 	
 	RoundInterface getRound();
 	

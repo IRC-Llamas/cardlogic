@@ -8,6 +8,8 @@ import com.foss.llamas.poker.domain.Card;
 import com.foss.llamas.poker.domain.Deck;
 
 public interface RoundInterface {
+	long getRoundID();
+	
 	Map<Player, Boolean> getPlayers();
 	
 	IPot getPot();
@@ -30,7 +32,7 @@ public interface RoundInterface {
 	
 	GameInterface getGame();
 	
-	TurnManager getTurnManager();
+	TurnManagerInterface getTurnManager();
 	
 	RoundType getRoundType();
 	

@@ -13,14 +13,40 @@ import io.reactivex.rxjava3.core.Observable;
 
 public interface RoundEventManagerInterface {
 	Observable<FoldCommand> onFold();
+	
 	Observable<MuckCommand> onMuck();
+	
 	Observable<ShowCommand> onShow();
+	
 	Observable<CallCommand> onCall();
+	
 	Observable<RaiseCommand> onRaise();
+	
 	Observable<BetCommand> onBet();
+	
 	Observable<CheckCommand> onCheck();
+	
 	Observable<ViewCardsCommand> onPeek();
+	
 	Observable<Player> onNextPlayerTurn();
+	
 	Observable<RoundType> onNextRoundTurn();
-	Observable<RoundCompletionDetails> onRoundComplete();
+	
+	Observable<RoundCompletionDetails> onRoundComplete(); 
+	
+	void doFold(FoldCommand command);
+	
+	void doMuck(MuckCommand command);
+	
+	void doCall(CallCommand command);
+	
+	void doRaise(RaiseCommand command);
+	
+	void doBet(BetCommand command);
+	
+	void doCheck(CheckCommand command);
+	
+	void doPeek(ViewCardsCommand command);
+	
+	void doShow(ShowCommand command);
 }

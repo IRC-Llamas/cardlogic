@@ -23,4 +23,26 @@ public class StartGameCommand {
 	
 	@ParametersDelegate
 	private CommandDelegate delegate = new CommandDelegate();
+
+	public int getJokerCount() {
+		return jokerCount;
+	}
+
+	public int getAnte() {
+		return ante;
+	}
+
+	public int getMaxPlayers() {
+		return maxPlayers;
+	}
+
+	public int getJoinDelay() {
+		return joinDelay;
+	}
+
+	public CommandDelegate getDelegate() {
+		return delegate;
+	}
+	
+	
 }

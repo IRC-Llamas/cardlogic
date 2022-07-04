@@ -20,6 +20,8 @@ public interface GameEventManagerInterface {
 	
 	Observable<LeaveGameCommand> onLeaveGame();
 	
+	Observable<GameMessageInterface> onMessage();
+	
 	default void startGame(StartGameCommand command) throws UnsupportedOperationException {
 		if (getGame().getGameState() == GameState.INACTIVE) {
 			fireStartGame(command);
@@ -28,6 +30,8 @@ public interface GameEventManagerInterface {
 			throw new UnsupportedOperationException("Game state must be inactive.");
 		}
 	}
+	
+	void sendMessage(GameMessageInterface message);
 	
 	void cancelGame(CancelGameCommand command) throws UnsupportedOperationException;
 	

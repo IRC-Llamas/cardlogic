@@ -13,7 +13,12 @@ public class BasicUnicodeCardStringFormatter implements CardStringFormatter {
 		String suit = null;
 		String rank = null;
 		if (card.isWild()) {
-			result = "[*]";
+			if (Objects.equals(card.getRank(), Rank.JOKER)) {
+				result = "[*]";
+			}
+			else {
+				result = "[*]";
+			}
 		}
 		else {
 			switch (card.getRank()) {

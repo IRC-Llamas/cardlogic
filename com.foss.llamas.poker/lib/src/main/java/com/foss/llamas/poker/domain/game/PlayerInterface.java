@@ -42,4 +42,12 @@ public interface PlayerInterface {
 	void sendMessage(GameMessageInterface message);
 	
 	Observable<GameMessageInterface> onMessageReceived();
+	
+	long getWinningStreak();
+	
+	long getBestWinningStreak();
+	
+	long getLosingStreak();
+	
+	long getBestLosingStreak();
 }

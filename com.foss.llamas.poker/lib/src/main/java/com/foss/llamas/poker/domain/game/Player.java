@@ -23,7 +23,15 @@ public class Player implements PlayerInterface {
 	private BigDecimal totalWinnings;
 	
 	private BigDecimal totalLosses;
+	
+	private long winningStreak;
+	
+	private long bestWinningStreak;
 
+	private long losingStreak;
+	
+	private long bestLosingStreak;
+	
 	@Override
 	public String getName() {
 		return name;
@@ -75,4 +83,30 @@ public class Player implements PlayerInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public long getWinningStreak() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getBestWinningStreak() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getLosingStreak() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getBestLosingStreak() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
 }

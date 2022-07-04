@@ -3,13 +3,102 @@
  */
 package com.foss.llamas.poker;
 
+import javax.naming.OperationNotSupportedException;
+
+import com.beust.jcommander.JCommander;
+import com.foss.llamas.poker.domain.ArgumentTokenizer;
+import com.foss.llamas.poker.domain.GameState;
+import com.foss.llamas.poker.domain.commands.BetCommand;
+import com.foss.llamas.poker.domain.commands.CallCommand;
+import com.foss.llamas.poker.domain.commands.CancelGameCommand;
+import com.foss.llamas.poker.domain.commands.CheckCommand;
+import com.foss.llamas.poker.domain.commands.FoldCommand;
+import com.foss.llamas.poker.domain.commands.JoinGameCommand;
+import com.foss.llamas.poker.domain.commands.LeaveGameCommand;
+import com.foss.llamas.poker.domain.commands.MuckCommand;
+import com.foss.llamas.poker.domain.commands.RaiseCommand;
+import com.foss.llamas.poker.domain.commands.ShowCommand;
+import com.foss.llamas.poker.domain.commands.StartGameCommand;
+import com.foss.llamas.poker.domain.commands.ViewCardsCommand;
+import com.foss.llamas.poker.domain.game.GameEventManagerInterface;
+import com.foss.llamas.poker.domain.game.Player;
 import com.foss.llamas.poker.domain.game.RoundInterface;
 
-public class Game {
+public class Game implements GameInterface {
+	
+	
+	public static void main(String[] args) {
+		Game game = new Game();
+		
+		game.acceptCommand("startgame --joker-count=2");
+	}
+	private GameState gameState = GameState.INACTIVE;
 	
 	public void acceptCommand(String string) {
 		
+		String[] argv = ArgumentTokenizer.tokenize(string).toArray(String[]::new);
+		
+		// Game Commands
+		StartGameCommand startGameCommand = new StartGameCommand();
+		CancelGameCommand cancelGameCommand = new CancelGameCommand();
+		JoinGameCommand joinGameCommand = new JoinGameCommand();
+		LeaveGameCommand leaveGameCommand = new LeaveGameCommand();
+		
+		// Round Commands
+		FoldCommand foldCommand = new FoldCommand();
+		MuckCommand muckCommand = new MuckCommand();
+		ShowCommand showCommand = new ShowCommand();
+		CallCommand callCommand = new CallCommand();
+		RaiseCommand raiseCommand = new RaiseCommand();
+		BetCommand betCommand = new BetCommand();
+		CheckCommand checkCommand = new CheckCommand();
+		ViewCardsCommand viewCardsCommand = new ViewCardsCommand();
+		
+		// Admin Commands
+		// TODO: Add here.
+		
+		JCommander jc = JCommander.newBuilder()
+				.addCommand(startGameCommand)
+				.addCommand(cancelGameCommand)
+				.addCommand(joinGameCommand)
+				.addCommand(leaveGameCommand)
+				.addCommand(foldCommand)
+				.addCommand(muckCommand)
+				.addCommand(showCommand)
+				.addCommand(callCommand)
+				.addCommand(raiseCommand)
+				.addCommand(betCommand)
+				.addCommand(checkCommand)
+				.addCommand(viewCardsCommand)
+			  .build();
+			jc.parse(argv);
+		System.out.println( jc.getParsedCommand() );
+		System.out.println(startGameCommand.getJokerCount());
 	}
 	
 	private RoundInterface currentRound = null;
+
+	@Override
+	public RoundInterface getCurrentRound() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	@Override
+	public GameEventManagerInterface getGameEventManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Player getStartingPlayer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -11,6 +11,8 @@ import com.foss.llamas.poker.domain.Deck;
 
 public class Round implements RoundInterface {
 	
+	private RoundType roundType = RoundType.PRE_GAME;
+	
 	private Map<Player, Boolean> players = new LinkedHashMap<>();
 	
 	private int roundCount;
@@ -86,20 +88,25 @@ public class Round implements RoundInterface {
 	}
 
 	@Override
-	public TurnManager getTurnManager() {
+	public TurnManagerInterface getTurnManager() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public RoundType getRoundType() {
-		// TODO Auto-generated method stub
-		return null;
+		return roundType;
 	}
 
 	@Override
 	public RoundType getNextRoundType() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public long getRoundID() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
