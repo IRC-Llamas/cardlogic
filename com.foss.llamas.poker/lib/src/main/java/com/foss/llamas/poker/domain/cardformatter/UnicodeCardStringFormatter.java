@@ -3,7 +3,6 @@ package com.foss.llamas.poker.domain.cardformatter;
 import java.util.Objects;
 
 import com.foss.llamas.poker.domain.Card;
-import com.foss.llamas.poker.domain.CardStringFormatter;
 import com.foss.llamas.poker.domain.Rank;
 
 public class UnicodeCardStringFormatter implements CardStringFormatter {
