@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 /// A deck to draw cards from.
-public class Deck {
+public class Deck implements DeckInterface {
 	private List<Card> cards;
 	private int cardsDrawn;
 	// TODO: Default constructor for a 52 card deck.
@@ -17,6 +17,7 @@ public class Deck {
 		shuffle();
 	}
 	
+	@Override
 	public void refresh() {
 		this.cardsDrawn = 0;
 		shuffle();
@@ -26,14 +27,17 @@ public class Deck {
 		Collections.shuffle(cards);
 	}
 	
+	@Override
 	public int getCardsDrawn() {
 		return this.cardsDrawn;
 	}
 	
+	@Override
 	public int getCardsRemaining() {
 		return this.cards.size() - this.cardsDrawn;
 	}
 	
+	@Override
 	public Optional<Card> draw() {
 		if (this.getCardsRemaining() == 0) {
 			return Optional.empty();

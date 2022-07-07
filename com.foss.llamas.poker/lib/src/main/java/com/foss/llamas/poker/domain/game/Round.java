@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.foss.llamas.poker.GameInterface;
 import com.foss.llamas.poker.domain.Card;
-import com.foss.llamas.poker.domain.Deck;
+import com.foss.llamas.poker.domain.DeckInterface;
 
 public class Round implements RoundInterface {
 	
@@ -17,7 +17,7 @@ public class Round implements RoundInterface {
 	
 	private int roundCount;
 	
-	private Deck deck;
+	private DeckInterface deck;
 	
 	private List<Card> burnCards;
 	
@@ -58,7 +58,7 @@ public class Round implements RoundInterface {
 	}
 
 	@Override
-	public Deck getDeck() {
+	public DeckInterface getDeck() {
 		return deck;
 	}
 

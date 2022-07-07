@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.foss.llamas.poker.GameInterface;
 import com.foss.llamas.poker.domain.Card;
-import com.foss.llamas.poker.domain.Deck;
+import com.foss.llamas.poker.domain.DeckInterface;
 
 public interface RoundInterface {
 	long getRoundID();
@@ -16,7 +16,7 @@ public interface RoundInterface {
 	
 	int getRoundCount();
 	
-	Deck getDeck();
+	DeckInterface getDeck();
 	
 	List<Card> getBurnCards();
 		

@@ -50,11 +50,11 @@ public class DeckBuilder {
 		return this;
 	}
 	
-	public List<Card> build() {
+	public DeckInterface build() {
 		for (Plugin<List<Card>> plugin : plugins) {
 			plugin.apply(deck);
 		}
 		
-		return deck;
+		return new Deck(deck);
 	}
 }
