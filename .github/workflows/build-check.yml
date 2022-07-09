@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: cardlogic build
 on: [push, pull_request]
 env:
      GRADLE_USER_HOME: $HOME/.gradle
@@ -22,10 +22,10 @@ jobs:
           chmod +x gradlew
       - name: Gradle build jar
         run: |
-          ./gradlew --no-daemon jar
-      - name: Gradle test
+          ./gradlew jar
+      - name: Gradle tests
         run: |
-          ./gradlew --no-daemon test
+          ./gradlew test
       - name: Publish build result to Github
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v2
