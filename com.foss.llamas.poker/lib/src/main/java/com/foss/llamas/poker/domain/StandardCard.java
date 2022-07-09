@@ -2,8 +2,8 @@ package com.foss.llamas.poker.domain;
 
 public class StandardCard implements Card {
 	private Color color;
-	private Rank rank;
-	private Suit suit;
+	private final Rank rank;
+	private final Suit suit;
 	
 	private boolean wild;
 	private StandardCard(Color color, Rank rank, Suit suit) {
@@ -48,7 +48,7 @@ public class StandardCard implements Card {
 		if ((color == Color.JOKER || color == Color.ANY) &&
 			(rank == Rank.ANY || rank == Rank.JOKER) &&
 			(suit == Suit.ANY || suit == Suit.JOKER)) {
-			card.setWild(true);
+			card.wild = true;
 		}
 		return card;
 	}
@@ -63,20 +63,17 @@ public class StandardCard implements Card {
 			else {
 				card.color = Color.ANY;				
 			}
-			card.setWild(true);
+			card.wild = true;
 		}
 		return card;
 	}
 	
 	public static Card buildJoker() {
 		StandardCard card = new StandardCard(Color.JOKER, Rank.JOKER, Suit.JOKER);
-		card.setWild(true);
+		card.wild = true;
 		return card;
 	}
-	
-	public void setWild(boolean wild) {
-		this.wild = wild;
-	}
+
 	public boolean isWild() {
 		return wild;
 	}
