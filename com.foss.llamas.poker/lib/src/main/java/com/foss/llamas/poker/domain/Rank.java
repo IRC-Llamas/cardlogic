@@ -1,5 +1,8 @@
 package com.foss.llamas.poker.domain;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 public enum Rank {
 	MAX,
 	ACE,
@@ -17,5 +20,11 @@ public enum Rank {
 	KING,
 	JOKER,
 	OTHER,
-	ANY
+	ANY;
+	
+	public static Collection<Rank> getStandardRanks() {
+		return Arrays.asList(ACE, KING, QUEEN, JACK,
+				TEN, NINE, EIGHT, SEVEN, SIX,
+				FIVE, FOUR, THREE, TWO);
+	}
 }

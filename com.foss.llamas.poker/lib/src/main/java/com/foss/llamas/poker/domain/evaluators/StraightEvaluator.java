@@ -1,8 +1,11 @@
 package com.foss.llamas.poker.domain.evaluators;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.foss.llamas.poker.domain.Card;
 import com.foss.llamas.poker.domain.CardComparator;
@@ -36,6 +39,24 @@ public class StraightEvaluator extends HandResult {
 		// TODO: Implement this.
 		
 		return false;
+	}
+
+	private static Map<Rank, Boolean> getRankMap(List<Card> cards) {
+		Collection<Rank> standardRanks = Rank.getStandardRanks();
+		
+		Map<Rank, Boolean> rankMap = new LinkedHashMap<>();
+		
+		for (Rank rank : standardRanks) {
+			rankMap.put(rank, false);
+		}
+		
+		for (Card card : cards) {
+			if (!card.isWild()) {
+				rankMap.put(card.getRank(), true);
+			}
+		}
+		
+		return rankMap;
 	}
 
 }
