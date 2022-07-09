@@ -16,20 +16,20 @@ class CardComparatorTest {
 	private static Stream<Arguments> compareNegative1() {
 		return Stream.of(
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.TWO, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.THREE, Suit.ANY)
+						StandardCard.build(Rank.TWO, Suit.ANY),
+						StandardCard.build(Rank.THREE, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.TWO, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.ACE, Suit.ANY)
+						StandardCard.build(Rank.TWO, Suit.ANY),
+						StandardCard.build(Rank.ACE, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.KING, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.ACE, Suit.ANY)
+						StandardCard.build(Rank.KING, Suit.ANY),
+						StandardCard.build(Rank.ACE, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.TEN, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.JACK, Suit.ANY)
+						StandardCard.build(Rank.TEN, Suit.ANY),
+						StandardCard.build(Rank.JACK, Suit.ANY)
 				)
 		);
 	}
@@ -37,20 +37,20 @@ class CardComparatorTest {
 	private static Stream<Arguments> compareEqual() {
 		return Stream.of(
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.TWO, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.TWO, Suit.ANY)
+						StandardCard.build(Rank.TWO, Suit.ANY),
+						StandardCard.build(Rank.TWO, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.ACE, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.ACE, Suit.ANY)
+						StandardCard.build(Rank.ACE, Suit.ANY),
+						StandardCard.build(Rank.ACE, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.KING, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.KING, Suit.ANY)
+						StandardCard.build(Rank.KING, Suit.ANY),
+						StandardCard.build(Rank.KING, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.TEN, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.TEN, Suit.ANY)
+						StandardCard.build(Rank.TEN, Suit.ANY),
+						StandardCard.build(Rank.TEN, Suit.ANY)
 				)
 		);
 	}
@@ -58,20 +58,20 @@ class CardComparatorTest {
 	private static Stream<Arguments> compare1() {
 		return Stream.of(
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.THREE, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.TWO, Suit.ANY)
+						StandardCard.build(Rank.THREE, Suit.ANY),
+						StandardCard.build(Rank.TWO, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.ACE, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.KING, Suit.ANY)
+						StandardCard.build(Rank.ACE, Suit.ANY),
+						StandardCard.build(Rank.KING, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.JACK, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.TEN, Suit.ANY)
+						StandardCard.build(Rank.JACK, Suit.ANY),
+						StandardCard.build(Rank.TEN, Suit.ANY)
 				),
 				Arguments.of(
-						new StandardCard(Color.ANY, Rank.ACE, Suit.ANY),
-						new StandardCard(Color.ANY, Rank.TWO, Suit.ANY)
+						StandardCard.build(Rank.ACE, Suit.ANY),
+						StandardCard.build(Rank.TWO, Suit.ANY)
 				)
 		);
 	}
