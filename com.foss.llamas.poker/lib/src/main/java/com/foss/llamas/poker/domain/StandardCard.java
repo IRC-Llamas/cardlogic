@@ -6,7 +6,7 @@ public class StandardCard implements Card {
 	private Suit suit;
 	
 	private boolean wild;
-	private StandardCard(Color color, Rank rank, Suit suit) {
+	StandardCard(Color color, Rank rank, Suit suit) {
 		this.color = color;
 		this.rank = rank;
 		this.suit = suit;
