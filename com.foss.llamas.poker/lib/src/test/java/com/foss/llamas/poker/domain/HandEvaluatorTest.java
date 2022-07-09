@@ -1,4 +1,4 @@
-package com.foss.llamas.poker;
+package com.foss.llamas.poker.domain;
 
 import java.util.ArrayList;
 import java.util.List;
