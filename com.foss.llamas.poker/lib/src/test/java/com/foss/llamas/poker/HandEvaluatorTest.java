@@ -14,6 +14,7 @@ import com.foss.llamas.poker.domain.HandEvaluatorUtil;
 import com.foss.llamas.poker.domain.Rank;
 import com.foss.llamas.poker.domain.Suit;
 import com.foss.llamas.poker.domain.evaluators.PairEvaluator;
+import com.foss.llamas.poker.domain.evaluators.StraightEvaluator;
 
 public class HandEvaluatorTest {
 
@@ -46,5 +47,28 @@ public class HandEvaluatorTest {
 		pairs.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
 		
 		Assertions.assertTrue(new PairEvaluator().test(pairs));
+	}	
+	
+	@Test 
+	public void testStraight() {
+		List<Card> noStraight = new ArrayList<>();
+
+		noStraight.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
+		noStraight.add(StandardCard.build(Rank.ACE, Suit.HEARTS));
+		noStraight.add(StandardCard.build(Rank.THREE, Suit.SPADES));
+		noStraight.add(StandardCard.build(Rank.FOUR, Suit.CLUBS));
+		noStraight.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
+
+		Assertions.assertFalse(new StraightEvaluator().test(noStraight));
+
+		/*List<Card> straight = new ArrayList<>();
+
+		straight.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
+		straight.add(StandardCard.build(Rank.TWO, Suit.HEARTS));
+		straight.add(StandardCard.build(Rank.THREE, Suit.SPADES));
+		straight.add(StandardCard.build(Rank.FOUR, Suit.CLUBS));
+		straight.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
+		
+		Assertions.assertTrue(new StraightEvaluator().test(straight));*/
 	}
 }
