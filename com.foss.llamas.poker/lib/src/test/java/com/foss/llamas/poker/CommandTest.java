@@ -96,6 +96,12 @@ public class CommandTest {
     	Assertions.assertEquals(startGameCommand.getJokerCount(), 2);
     	
     	Assertions.assertEquals(startGameCommand.getDelegate().getPlayerName(), "joe");
+    	
+    	Assertions.assertEquals(startGameCommand.getJoinDelay(), 30);
+
+    	Assertions.assertEquals(startGameCommand.getAnte(), 0);
+    	
+    	Assertions.assertEquals(startGameCommand.getMaxPlayers(), 9);
     }
     
     private static String[] tokenize(String str) {
