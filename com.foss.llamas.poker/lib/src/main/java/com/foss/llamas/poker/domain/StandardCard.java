@@ -74,7 +74,7 @@ public class StandardCard implements Card {
 		return card;
 	}
 	
-	public void setWild(boolean wild) {
+	private void setWild(boolean wild) {
 		this.wild = wild;
 	}
 	public boolean isWild() {
