@@ -22,7 +22,7 @@ jobs:
           chmod +x gradlew
       - name: Gradle build jar
         run: |
-          ./gradlew --no-daemon clean jar
+          ./gradlew --no-daemon jar
       - name: Publish build result to Github
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v2
