@@ -22,13 +22,13 @@ jobs:
           chmod +x gradlew
       - name: Gradle build jar
         run: |
-          ./gradlew --no-daemon clean jar
+          ./gradlew --no-daemon clean jar test
       - name: Publish build result to Github
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v2
         with:
           name: cardlogic
-          path: ${{ github.workspace }}/com.foss.llamas.poker/lib/build/**.jar
+          path: ${{ github.workspace }}/com.foss.llamas.poker/lib/build/libs/**.jar
           retention-days: 1
 #  Explore-GitHub-Actions:
 #    runs-on: ubuntu-latest
