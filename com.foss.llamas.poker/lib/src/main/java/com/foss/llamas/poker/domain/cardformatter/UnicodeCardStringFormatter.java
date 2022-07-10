@@ -11,7 +11,7 @@ import static java.util.Map.entry;
 
 public class UnicodeCardStringFormatter implements CardStringFormatter {
 
-	String wild = "🃟";
+	private static final String wild = "🃟";
 	
 	String joker = "🃏";
 
