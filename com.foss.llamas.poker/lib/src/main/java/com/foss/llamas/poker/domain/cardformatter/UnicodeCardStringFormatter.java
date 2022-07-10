@@ -15,7 +15,7 @@ public class UnicodeCardStringFormatter implements CardStringFormatter {
 	
 	String joker = "🃏";
 
-	final Map<Suit, Integer> aces = Map.ofEntries(
+	private static final Map<Suit, Integer> aces = Map.ofEntries(
 			entry(Suit.SPADES, 127137),
 			entry(Suit.HEARTS, 127153),
 			entry(Suit.DIAMONDS, 127169),
