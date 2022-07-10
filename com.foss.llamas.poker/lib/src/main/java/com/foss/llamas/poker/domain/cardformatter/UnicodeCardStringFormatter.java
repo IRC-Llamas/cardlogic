@@ -1,287 +1,64 @@
 package com.foss.llamas.poker.domain.cardformatter;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 import com.foss.llamas.poker.domain.Card;
 import com.foss.llamas.poker.domain.Rank;
+import com.foss.llamas.poker.domain.Suit;
+import static java.util.Map.entry;
 
 public class UnicodeCardStringFormatter implements CardStringFormatter {
 
-	String wild = "🃟";
+	private static final String wild = "🃟";
 	
-	String joker = "🃏";
+	private static final String joker = "🃏";
+
+	private static final Map<Suit, Integer> aces = Map.ofEntries(
+			entry(Suit.SPADES, 127137),
+			entry(Suit.HEARTS, 127153),
+			entry(Suit.DIAMONDS, 127169),
+			entry(Suit.CLUBS, 127185)
+	);
+	private static final Rank[] ranks = {
+			Rank.ACE,
+			Rank.TWO,
+			Rank.THREE,
+			Rank.FOUR,
+			Rank.FIVE,
+			Rank.SIX,
+			Rank.SEVEN,
+			Rank.EIGHT,
+			Rank.NINE,
+			Rank.TEN,
+			Rank.JACK,
+			null, // characters contain a Knight
+			Rank.QUEEN,
+			Rank.KING
+	};
+
+
 	
 	@Override
 	public String apply(Card card) {
-		final String result;
 		if (card.isWild()) {
 			if (Objects.equals(card.getRank(), Rank.JOKER)) {
-				result = joker;
+				return joker;
 			}
 			else {
-				result = wild;
+				return wild;
 			}
 		}
-		else {
-			Rank rank = card.getRank();
-			if (Objects.equals(rank, Rank.ACE)) {
-				switch (card.getSuit()) {
-
-				case CLUBS:
-					result = "🃑";
-					break;
-				case DIAMONDS:
-					result = "🃁";
-					break;
-				case HEARTS:
-					result = "🂱";
-					break;
-				case SPADES:
-					result = "🂡";
-					break;
-				default:
-					result = "🂠";
-					break;
-				}
-			}
-			else if (Objects.equals(rank, Rank.KING)) {
-				switch (card.getSuit()) {
-				case CLUBS:
-					result = "🃞";
-					break;
-				case DIAMONDS:
-					result = "🃎";
-					break;
-				case HEARTS:
-					result = "🂾";
-					break;
-				case SPADES:
-					result = "🂮";
-					break;
-				default:
-					result = "🂠";
-					break;
-				
-				}
-			}
-			else if (Objects.equals(rank, Rank.QUEEN)) {
-				switch (card.getSuit()) {
-				case CLUBS:
-					result = "🃝";
-					break;
-				case DIAMONDS:
-					result = "🃍";
-					break;
-				case HEARTS:
-					result = "🂽";
-					break;
-				case SPADES:
-					result = "🂭";
-					break;
-				default:
-					result = "🂠";
-					break;
-				
-				}
-			}			
-			else if (Objects.equals(rank, Rank.JACK)) {
-				switch (card.getSuit()) {
-				case CLUBS:
-					result = "🃛";
-					break;
-				case DIAMONDS:
-					result = "🃋";
-					break;
-				case HEARTS:
-					result = "🂻";
-					break;
-				case SPADES:
-					result = "🂫";
-					break;
-				default:
-					result = "🂠";
-					break;
-				
-				}
-			}
-			else if (Objects.equals(rank, Rank.TEN)) {
-				switch (card.getSuit()) {
-				case CLUBS:
-					result = "🃚";
-					break;
-				case DIAMONDS:
-					result = "🃊";
-					break;
-				case HEARTS:
-					result = "🂺";
-					break;
-				case SPADES:
-					result = "🂪";
-					break;
-				default:
-					result = "🂠";
-					break;
-				
-				}	
-			}
-			else if (Objects.equals(rank, Rank.NINE)) {
-				switch (card.getSuit()) {
-				case CLUBS:
-					result = "🃙";
-					break;
-				case DIAMONDS:
-					result = "🃉";
-					break;
-				case HEARTS:
-					result = "🂹";
-					break;
-				case SPADES:
-					result = "🂩";
-					break;
-				default:
-					result = "🂠";
-					break;
-				
-				}	
-			}
-			else if (Objects.equals(rank, Rank.EIGHT)) {
-				switch (card.getSuit()) {
-					case CLUBS:
-						result = "🃘";
-						break;
-					case DIAMONDS:
-						result = "🃈";
-						break;
-					case HEARTS:
-						result = "🂸";
-						break;
-					case SPADES:
-						result = "🂨";
-						break;
-					default:
-						result = "🂠";
-						break;
-				}	
-			}
-			else if (Objects.equals(rank, Rank.SEVEN)) {
-				switch (card.getSuit()) {
-					case CLUBS:
-						result = "🃗";
-						break;
-					case DIAMONDS:
-						result = "🃇";
-						break;
-					case HEARTS:
-						result = "🂷";
-						break;
-					case SPADES:
-						result = "🂧";
-						break;
-					default:
-						result = "🂠";
-						break;
-				}
-			}
-			else if (Objects.equals(rank, Rank.SIX)) {
-				switch (card.getSuit()) {
-					case CLUBS:
-						result = "🃖";
-						break;
-					case DIAMONDS:
-						result = "🃆";
-						break;
-					case HEARTS:
-						result = "🂶";
-						break;
-					case SPADES:
-						result = "🂦";
-						break;
-					default:
-						result = "🂠";
-						break;
-				}
-			}
-			else if (Objects.equals(rank, Rank.FIVE)) {
-				switch (card.getSuit()) {
-					case CLUBS:
-						result = "🃕";
-						break;
-					case DIAMONDS:
-						result = "🃆";
-						break;
-					case HEARTS:
-						result = "🂵";
-						break;
-					case SPADES:
-						result = "🂥";
-						break;
-					default:
-						result = "🂠";
-						break;
-				}
-			}
-			else if (Objects.equals(rank, Rank.FOUR)) {
-				switch (card.getSuit()) {
-					case CLUBS:
-						result = "🃔";
-						break;
-					case DIAMONDS:
-						result = "🃄";
-						break;
-					case HEARTS:
-						result = "🂴";
-						break;
-					case SPADES:
-						result = "🂤";
-						break;
-					default:
-						result = "🂠";
-						break;
-				}
-			}
-			else if (Objects.equals(rank, Rank.THREE)) {
-				switch (card.getSuit()) {
-					case CLUBS:
-						result = "🃓";
-						break;
-					case DIAMONDS:
-						result = "🃃";
-						break;
-					case HEARTS:
-						result = "🂳";
-						break;
-					case SPADES:
-						result = "🂣";
-						break;
-					default:
-						result = "🂠";
-						break;
-				}
-			}
-			else if (Objects.equals(rank, Rank.TWO)) {
-				switch (card.getSuit()) {
-					case CLUBS:
-						result = "🃒";
-						break;
-					case DIAMONDS:
-						result = "🃂";
-						break;
-					case HEARTS:
-						result = "🂲";
-						break;
-					case SPADES:
-						result = "🂢";
-						break;
-					default:
-						result = "🂠";
-						break;
-				}
-			}
-			else {
-				result = "🂠";
-			}
+		int rankIndex = Arrays.asList(ranks).indexOf(card.getRank());
+		if (rankIndex < 0 || !aces.containsKey(card.getSuit())) {
+			return "🂠";
 		}
-		return result;
+		return String.valueOf(
+				Character.toChars(
+						aces.get(card.getSuit()) + rankIndex
+				)
+		);
 	}
 
 }
