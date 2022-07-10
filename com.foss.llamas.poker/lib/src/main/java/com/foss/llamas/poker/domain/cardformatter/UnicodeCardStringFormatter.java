@@ -21,7 +21,7 @@ public class UnicodeCardStringFormatter implements CardStringFormatter {
 			entry(Suit.DIAMONDS, 127169),
 			entry(Suit.CLUBS, 127185)
 	);
-	final Rank[] ranks = {
+	private static final Rank[] ranks = {
 			Rank.ACE,
 			Rank.TWO,
 			Rank.THREE,
