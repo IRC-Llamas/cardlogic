@@ -13,6 +13,7 @@ import com.foss.llamas.poker.domain.commands.BetCommand;
 import com.foss.llamas.poker.domain.commands.CallCommand;
 import com.foss.llamas.poker.domain.commands.CancelGameCommand;
 import com.foss.llamas.poker.domain.commands.CheckCommand;
+import com.foss.llamas.poker.domain.commands.CommandDelegate;
 import com.foss.llamas.poker.domain.commands.FoldCommand;
 import com.foss.llamas.poker.domain.commands.JoinGameCommand;
 import com.foss.llamas.poker.domain.commands.LeaveGameCommand;
@@ -22,11 +23,15 @@ import com.foss.llamas.poker.domain.commands.ShowCommand;
 import com.foss.llamas.poker.domain.commands.StartGameCommand;
 import com.foss.llamas.poker.domain.commands.ViewCardsCommand;
 
-public class CommandTest {
-	
-	private static final String PLAYER_NAME = "joe";
+public abstract class BaseCommandTest {
 
-    JCommander jc;
+	protected static final String PLAYER_NAME = "joe";
+	
+	protected static final String getPlayerName() {
+		return "joe";
+	}
+
+    protected JCommander jc;
 
     void resetJCommander() {
 		// Game Commands
@@ -131,7 +136,7 @@ public class CommandTest {
     	
     	CancelGameCommand cancelGameComand = (CancelGameCommand)command;
     	
-    	Assertions.assertEquals(cancelGameComand.getDelegate().getPlayerName(), "joe");
+    	Assertions.assertEquals(cancelGameComand.getDelegate().getPlayerName(), getPlayerName());
     }
 
     @Test
@@ -144,49 +149,9 @@ public class CommandTest {
     	resetJCommander();
     }
     
-    @Test
-    void testStartGameCommand() {
-    	resetJCommander();
 
-    	List<String> argumentsList = new ArrayList<>();
-    	argumentsList.add("startgame");
-    	argumentsList.add("--player=joe");
-    	argumentsList.add("--joker-count=2");
-    	
-    	String arguments[] = tokenize(String.join(" ", argumentsList));
-    	
-    	jc.parse(arguments);
-    	
-    	String commandName = jc.getParsedCommand();
-    	
-    	Assertions.assertEquals("startgame", commandName);
-    	
-    	Assertions.assertFalse(jc.getCommands().isEmpty());
-    	
-    	jc = jc.getCommands().get(commandName);
-    	
-    	Assertions.assertFalse(jc.getObjects().isEmpty());
-    	
-    	Object command = jc.getObjects().iterator().next();
-    	
-    	boolean isCorrectCommand = (command instanceof StartGameCommand);
-    	
-    	Assertions.assertTrue(isCorrectCommand);
-    	
-    	StartGameCommand startGameCommand = (StartGameCommand)command;
-    	
-    	Assertions.assertEquals(startGameCommand.getJokerCount(), 2);
-    	
-    	Assertions.assertEquals(startGameCommand.getDelegate().getPlayerName(), "joe");
-    	
-    	Assertions.assertEquals(startGameCommand.getJoinDelay(), 30);
-
-    	Assertions.assertEquals(startGameCommand.getAnte(), 0);
-    	
-    	Assertions.assertEquals(startGameCommand.getMaxPlayers(), 9);
-    }
     
-    private static String[] tokenize(String str) {
+    protected static String[] tokenize(String str) {
 		return ArgumentTokenizer.tokenize(str).toArray(String[]::new);
 		
     }
