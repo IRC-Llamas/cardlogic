@@ -23,6 +23,8 @@ import com.foss.llamas.poker.domain.commands.StartGameCommand;
 import com.foss.llamas.poker.domain.commands.ViewCardsCommand;
 
 public class CommandTest {
+	
+	private static final String PLAYER_NAME = "joe";
 
     JCommander jc;
 
@@ -60,6 +62,86 @@ public class CommandTest {
 				.addCommand(checkCommand)
 				.addCommand(viewCardsCommand)
 			  .build();
+    }
+    
+    @Test
+    void testFoldCommand() {
+    	
+    }
+
+    @Test
+    void testMuckCommand() {
+    	
+    }
+
+    @Test
+    void testShowCommand() {
+    	
+    }
+
+    @Test
+    void testCallCommand() {
+    	
+    }
+
+    @Test
+    void testRaiseCommand() {
+    	
+    }
+    @Test
+    void testBetCommand() {
+    	
+    }
+    @Test
+    void testCheckCommand() {
+    	
+    }
+    @Test
+    void testViewCardsCommand() {
+    	
+    }
+
+    @Test
+    void testCancelGameCommand() {
+    	resetJCommander();
+
+    	List<String> argumentsList = new ArrayList<>();
+    	argumentsList.add(CancelGameCommand.COMMAND_NAME);
+    	argumentsList.add("--player=joe");
+    	
+    	String arguments[] = tokenize(String.join(" ", argumentsList));
+    	
+    	jc.parse(arguments);
+    	
+    	String commandName = jc.getParsedCommand();
+    	
+    	Assertions.assertEquals(CancelGameCommand.COMMAND_NAME, commandName);
+    	
+    	Assertions.assertFalse(jc.getCommands().isEmpty());
+    	
+    	jc = jc.getCommands().get(commandName);
+    	
+    	Assertions.assertFalse(jc.getObjects().isEmpty());
+    	
+    	Object command = jc.getObjects().iterator().next();
+    	
+    	boolean isCorrectCommand = (command instanceof CancelGameCommand);
+    	
+    	Assertions.assertTrue(isCorrectCommand);
+    	
+    	CancelGameCommand cancelGameComand = (CancelGameCommand)command;
+    	
+    	Assertions.assertEquals(cancelGameComand.getDelegate().getPlayerName(), "joe");
+    }
+
+    @Test
+    void testJoinGameCommand() {
+    	resetJCommander();
+    }
+
+    @Test
+    void testLeaveGameCommand() {
+    	resetJCommander();
     }
     
     @Test
