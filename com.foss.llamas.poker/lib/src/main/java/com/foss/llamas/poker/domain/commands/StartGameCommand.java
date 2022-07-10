@@ -4,8 +4,10 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.ParametersDelegate;
 
-@Parameters(commandNames = {"startgame"}, separators = "=")
+@Parameters(commandNames = StartGameCommand.COMMAND_NAME, separators = "=")
 public class StartGameCommand {
+	
+	public static final String COMMAND_NAME = "startgame";
 	
 	@Parameter(names = "--joker-count")
 	private int jokerCount = 0;
