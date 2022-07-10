@@ -13,7 +13,7 @@ public class UnicodeCardStringFormatter implements CardStringFormatter {
 
 	private static final String wild = "🃟";
 	
-	String joker = "🃏";
+	private static final String joker = "🃏";
 
 	private static final Map<Suit, Integer> aces = Map.ofEntries(
 			entry(Suit.SPADES, 127137),
