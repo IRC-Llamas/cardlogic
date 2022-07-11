@@ -7,16 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
-import org.junit.jupiter.params.aggregator.ArgumentsAggregationException;
-import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.foss.llamas.poker.domain.commands.CommandDelegate;
@@ -25,11 +20,6 @@ import com.foss.llamas.poker.domain.commands.StartGameCommand;
 public class StartGameCommandTest extends BaseCommandTest {
 
 	@ParameterizedTest
-	/*@CsvSource({
-		(StartGameCommand.COMMAND_NAME + ","), 
-		(CommandDelegate.PLAYER_FLAG_SHORT + "," + PLAYER_NAME),
-		(StartGameCommand.JOKER_COUNT_FLAG_SHORT + "," + "2")})*/
-	
 	@MethodSource
     void testStartGameCommand(Map<String, Optional<String>> input) {
     	resetJCommander();
@@ -45,10 +35,7 @@ public class StartGameCommandTest extends BaseCommandTest {
     		
     		if (value.isPresent()) {
     	    	argumentsList.add(
-	        		String.format("%s%s%s", 
-	        			key,
-	        			GameConstants.COMMAND_SEPARATOR, 
-	        			value.get()));
+	        		getArgument(key, value.get()));
     		}
     		else {
     			argumentsList.add(key);
@@ -61,7 +48,7 @@ public class StartGameCommandTest extends BaseCommandTest {
     	
     	String commandName = jc.getParsedCommand();
     	
-    	Assertions.assertEquals("startgame", commandName);
+    	Assertions.assertEquals(StartGameCommand.COMMAND_NAME, commandName);
     	
     	Assertions.assertFalse(jc.getCommands().isEmpty());
     	
@@ -77,45 +64,100 @@ public class StartGameCommandTest extends BaseCommandTest {
     	
     	StartGameCommand startGameCommand = (StartGameCommand)command;
     	
-    	Optional<String> inputJokerCount;
-    	if (input.containsKey(StartGameCommand.JOKER_COUNT_FLAG_SHORT)) {
-    		inputJokerCount = input.get(StartGameCommand.JOKER_COUNT_FLAG_SHORT);
-    	}
-    	else if (input.containsKey(StartGameCommand.JOKER_COUNT_FLAG_LONG)) {
-    		inputJokerCount = input.get(StartGameCommand.JOKER_COUNT_FLAG_LONG);
-    	}
-    	else {
-    		inputJokerCount = Optional.of(
-    			String.valueOf(StartGameCommand.JOKER_COUNT_DEFAULT));
-    	}
-    	
     	Assertions.assertEquals(
     		String.valueOf(startGameCommand.getJokerCount()), 
-    		inputJokerCount.get());
-    	
-    	Assertions.assertEquals(startGameCommand.getDelegate().getPlayerName(), getPlayerName());
-    	
-    	Assertions.assertEquals(startGameCommand.getJoinDelay(), 30);
+    		getValue(
+    	    		input, 
+    	    		StartGameCommand.JOKER_COUNT_DEFAULT, 
+    	    		StartGameCommand.JOKER_COUNT_FLAG_SHORT,
+    	    		StartGameCommand.JOKER_COUNT_FLAG_LONG));
 
-    	Assertions.assertEquals(startGameCommand.getAnte(), 0);
-    	
-    	Assertions.assertEquals(startGameCommand.getMaxPlayers(), 9);
+    	Assertions.assertEquals(
+        		String.valueOf(startGameCommand.getDelegate().getPlayerName()), 
+        		getValue(
+        	    		input, 
+        	    		getPlayerName(), 
+        	    		CommandDelegate.PLAYER_FLAG_SHORT,
+        	    		CommandDelegate.PLAYER_FLAG_LONG));
+
+    	Assertions.assertEquals(
+        		String.valueOf(startGameCommand.getJoinDelay()), 
+        		getValue(
+        	    		input, 
+        	    		StartGameCommand.JOIN_DELAY_DEFAULT, 
+        	    		StartGameCommand.JOIN_DELAY_FLAG_SHORT,
+        	    		StartGameCommand.JOIN_DELAY_FLAG_LONG));
+    	Assertions.assertEquals(
+        		String.valueOf(startGameCommand.getAnte()), 
+        		getValue(
+        	    		input, 
+        	    		StartGameCommand.ANTE_DEFAULT, 
+        	    		StartGameCommand.ANTE_FLAG_SHORT,
+        	    		StartGameCommand.ANTE_FLAG_LONG));
+
+    	Assertions.assertEquals(
+        		String.valueOf(startGameCommand.getMaxPlayers()), 
+        		getValue(
+        	    		input, 
+        	    		StartGameCommand.MAX_PLAYERS_DEFAULT, 
+        	    		StartGameCommand.MAX_PLAYERS_FLAG_SHORT,
+        	    		StartGameCommand.MAX_PLAYERS_FLAG_LONG));
     }
 	
 	//private static <T> T defaultValue(T object, T defaultValue) 
 
 
+	private static String getValue(Map<String, Optional<String>> input, Object defaultValue, String... flags) {
+		return Stream.of(flags)
+			.filter(input::containsKey)
+			.map(input::get)
+			.findFirst()
+			.orElse(Optional.of(String.valueOf(defaultValue)))
+			.get();
+	}
+	
 	private static Stream<Map<String, Optional<String>>> testStartGameCommand() {
 	    return Stream.of(
 	    	getCommandWithFlags(
-    			String.format("%s%s%s", 
-	    			CommandDelegate.PLAYER_FLAG_SHORT,
-	    			GameConstants.COMMAND_SEPARATOR, 
+    			getArgument(
+    				CommandDelegate.PLAYER_FLAG_SHORT,
 	    			getPlayerName()),
-        		String.format("%s%s%s", 
+        		getArgument(
         			StartGameCommand.JOKER_COUNT_FLAG_SHORT,
+        			2)),
+        	getCommandWithFlags(
+        		getArgument(
+        			CommandDelegate.PLAYER_FLAG_LONG, 
+        			getPlayerName()),
+        		getArgument(
+        			StartGameCommand.ANTE_FLAG_SHORT,
+        			10)));
+	}
+	
+	private static final String getArgument(String key, Object... args) {
+		final String returnValue;
+		if (args != null && args.length > 0 && args[0] != null) {
+			if (args.length > 1) {
+				returnValue = String.format("%s%s%s", 
+        			key,
         			GameConstants.COMMAND_SEPARATOR, 
-        			"2")));
+        			Stream.of(args)
+        				.map(String::valueOf)
+        				.collect(
+        					Collectors.joining(GameConstants.ARGUMENT_SEPARATOR)));
+			}
+			else {
+				returnValue = String.format("%s%s%s", 
+        			key,
+        			GameConstants.COMMAND_SEPARATOR, 
+        			String.valueOf(args[0]));
+			}
+		}
+		else {
+			returnValue = key;
+		}
+		
+		return returnValue;
 	}
 	
 	private static Map<String, Optional<String>> getCommandWithFlags(String... args) {
@@ -143,6 +185,8 @@ public class StartGameCommandTest extends BaseCommandTest {
 		return argumentsMap;
 		
 	}
+	
+	// TODO: Consider using this.
     /*private static final class StartGameCommandAggregator implements ArgumentsAggregator {
 
 		@Override
