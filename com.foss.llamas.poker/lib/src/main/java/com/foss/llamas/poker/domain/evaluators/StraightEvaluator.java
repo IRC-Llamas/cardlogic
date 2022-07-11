@@ -37,8 +37,8 @@ public class StraightEvaluator extends HandResult {
 
 		Multimap<Rank, Integer> rankValueMap = getRankValueMap();
 		// Step 3: Look for straights.
-		for (int startOfStraight = 1; startOfStraight <= 10; startOfStraight++) {
-			int endOfStraight = startOfStraight + 4;
+		for (int endOfStraight = 14; endOfStraight >= 5; endOfStraight--) {
+			int startOfStraight = endOfStraight - 4;
 			
 			Map<Rank, Card> cardsToSet = new LinkedHashMap<>();
 			for (Card card : cardQueue) {
@@ -57,7 +57,8 @@ public class StraightEvaluator extends HandResult {
 				return true;
 			}
 		}
-		
+
+		setCards(new ArrayList<>(collectTopFiveCards(cardQueue, wildCards)));
 		return false;
 	}
 }
