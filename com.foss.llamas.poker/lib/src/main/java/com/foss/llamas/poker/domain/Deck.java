@@ -1,25 +1,26 @@
 package com.foss.llamas.poker.domain;
 
-import java.util.ArrayList;
+import java.util.Stack;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 /// A deck to draw cards from.
 public class Deck implements DeckInterface {
-	private List<Card> cards;
-	private int cardsDrawn;
-	// TODO: Default constructor for a 52 card deck.
+	private final Stack<Card> cards;
+	private final Stack<Card> drawnCards;
+
 	public Deck(Collection<Card> cards) {
-		this.cards = new ArrayList<>(cards);
-		cardsDrawn = 0;
+		this.cards = new Stack<>();
+		this.drawnCards = new Stack<>();
+		this.cards.addAll(cards);
 		shuffle();
 	}
 	
 	@Override
 	public void refresh() {
-		this.cardsDrawn = 0;
+		this.cards.addAll(drawnCards);
+		this.drawnCards.clear();
 		shuffle();
 	}
 	
@@ -29,12 +30,12 @@ public class Deck implements DeckInterface {
 	
 	@Override
 	public int getCardsDrawn() {
-		return this.cardsDrawn;
+		return this.drawnCards.size();
 	}
 	
 	@Override
 	public int getCardsRemaining() {
-		return this.cards.size() - this.cardsDrawn;
+		return this.cards.size();
 	}
 	
 	@Override
@@ -42,9 +43,9 @@ public class Deck implements DeckInterface {
 		if (this.getCardsRemaining() == 0) {
 			return Optional.empty();
 		} else {
-			final var index = this.cardsDrawn;
-			++this.cardsDrawn;
-			return Optional.of(this.cards.get(index));
+			Card card = this.cards.pop();
+			this.drawnCards.push(card);
+			return Optional.of(card);
 		}
 	}
 }
