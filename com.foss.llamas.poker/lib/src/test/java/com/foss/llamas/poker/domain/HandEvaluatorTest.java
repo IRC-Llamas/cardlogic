@@ -6,13 +6,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.foss.llamas.poker.domain.StandardCard;
-import com.foss.llamas.poker.domain.Card;
-import com.foss.llamas.poker.domain.Color;
-import com.foss.llamas.poker.domain.HandEvaluatorBuilder;
-import com.foss.llamas.poker.domain.HandEvaluatorUtil;
-import com.foss.llamas.poker.domain.Rank;
-import com.foss.llamas.poker.domain.Suit;
 import com.foss.llamas.poker.domain.evaluators.PairEvaluator;
 import com.foss.llamas.poker.domain.evaluators.StraightEvaluator;
 
