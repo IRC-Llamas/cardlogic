@@ -51,24 +51,53 @@ public class HandEvaluatorTest {
 	
 	@Test 
 	public void testStraight() {
-		List<Card> noStraight = new ArrayList<>();
-
-		noStraight.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
-		noStraight.add(StandardCard.build(Rank.ACE, Suit.HEARTS));
-		noStraight.add(StandardCard.build(Rank.THREE, Suit.SPADES));
-		noStraight.add(StandardCard.build(Rank.FOUR, Suit.CLUBS));
-		noStraight.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
-
-		Assertions.assertFalse(new StraightEvaluator().test(noStraight));
-
-		/*List<Card> straight = new ArrayList<>();
-
-		straight.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
-		straight.add(StandardCard.build(Rank.TWO, Suit.HEARTS));
-		straight.add(StandardCard.build(Rank.THREE, Suit.SPADES));
-		straight.add(StandardCard.build(Rank.FOUR, Suit.CLUBS));
-		straight.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
+		List<Card> cards = new ArrayList<>(5);
 		
-		Assertions.assertTrue(new StraightEvaluator().test(straight));*/
+		cards.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.ACE, Suit.HEARTS));
+		cards.add(StandardCard.build(Rank.THREE, Suit.SPADES));
+		cards.add(StandardCard.build(Rank.FOUR, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
+		Assertions.assertFalse(new StraightEvaluator().test(cards));
+
+		cards.clear();
+		cards.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.TWO, Suit.HEARTS));
+		cards.add(StandardCard.build(Rank.THREE, Suit.SPADES));
+		cards.add(StandardCard.build(Rank.FOUR, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
+		Assertions.assertTrue(new StraightEvaluator().test(cards));
+
+		cards.clear();
+		cards.add(StandardCard.build(Rank.TEN, Suit.DIAMONDS));
+		cards.add(StandardCard.build(Rank.JACK, Suit.HEARTS));
+		cards.add(StandardCard.build(Rank.QUEEN, Suit.SPADES));
+		cards.add(StandardCard.build(Rank.KING, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.ACE, Suit.DIAMONDS));
+		Assertions.assertTrue(new StraightEvaluator().test(cards));
+		
+		cards.clear();
+		cards.add(StandardCard.build(Rank.JACK, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.QUEEN, Suit.HEARTS));
+		cards.add(StandardCard.build(Rank.KING, Suit.SPADES));
+		cards.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.TWO, Suit.DIAMONDS));
+		Assertions.assertFalse(new StraightEvaluator().test(cards));
+		
+		cards.clear();
+		cards.add(StandardCard.build(Rank.SEVEN, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.EIGHT, Suit.HEARTS));
+		cards.add(StandardCard.build(Rank.NINE, Suit.SPADES));
+		cards.add(StandardCard.build(Rank.TEN, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.JACK, Suit.DIAMONDS));
+		Assertions.assertTrue(new StraightEvaluator().test(cards));
+
+		cards.clear();
+		cards.add(StandardCard.build(Rank.JOKER, Suit.JOKER));
+		cards.add(StandardCard.build(Rank.FOUR, Suit.HEARTS));
+		cards.add(StandardCard.build(Rank.FIVE, Suit.SPADES));
+		cards.add(StandardCard.build(Rank.SIX, Suit.CLUBS));
+		cards.add(StandardCard.build(Rank.SEVEN, Suit.DIAMONDS));
+		Assertions.assertTrue(new StraightEvaluator().test(cards));
 	}
 }
