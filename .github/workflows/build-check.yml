@@ -56,4 +56,4 @@ jobs:
         chmod +x gradlew
     - name: Check Editorconfig
       run: |
-        ./gradlew checkEditorConfig
+        ./gradlew editorconfigCheck
