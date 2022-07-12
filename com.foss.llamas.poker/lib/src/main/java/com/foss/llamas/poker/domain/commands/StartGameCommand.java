@@ -6,7 +6,7 @@ import com.beust.jcommander.ParametersDelegate;
 import com.foss.llamas.poker.GameConstants;
 
 @Parameters(commandNames = StartGameCommand.COMMAND_NAME, separators = GameConstants.COMMAND_SEPARATOR)
-public class StartGameCommand {
+public class StartGameCommand implements BaseCommand {
 	
 	public static final String COMMAND_NAME = "startgame";
 
@@ -34,6 +34,9 @@ public class StartGameCommand {
 	
 	public static final Integer JOIN_DELAY_DEFAULT = 30;
 
+	public final String getCommandName() {
+		return COMMAND_NAME;
+	}
 	
 	@Parameter(names = {JOKER_COUNT_FLAG_SHORT, JOKER_COUNT_FLAG_LONG},
 		description = "The number of jokers to be included in the deck.",
