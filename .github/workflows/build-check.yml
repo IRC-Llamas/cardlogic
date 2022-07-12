@@ -1,49 +1,59 @@
 name: cardlogic build
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+       - main
 env:
-     GRADLE_USER_HOME: $HOME/.gradle
+  GRADLE_USER_HOME: $HOME/.gradle
 jobs:
-   build:
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ./com.foss.llamas.poker
-      steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-          cache: gradle
-      - name: Grant execute for gradlew and scripts
-        run: |
-          chmod +x gradlew
-      - name: Gradle build jar
-        run: |
-          ./gradlew jar
-      - name: Gradle tests
-        run: |
-          ./gradlew test
-      - name: Publish build result to Github
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v2
-        with:
-          name: cardlogic
-          path: ${{ github.workspace }}/com.foss.llamas.poker/lib/build/libs/**.jar
-          retention-days: 1
-#  Explore-GitHub-Actions:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-#      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-#      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-#      - name: Check out repository code
-#        uses: actions/checkout@v3
-#      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-#      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-#      - name: List files in the repository
-#        run: |
-#          ls ${{ github.workspace }}
-#      - run: echo "🍏 This job's status is ${{ job.status }}."
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./com.foss.llamas.poker
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+        cache: gradle
+    - name: Grant execute for gradlew and scripts
+      run: |
+        chmod +x gradlew
+    - name: Gradle build jar
+      run: |
+        ./gradlew jar
+    - name: Gradle tests
+      run: |
+        ./gradlew test
+    - name: Publish build result to Github
+      if: github.event_name != 'pull_request'
+      uses: actions/upload-artifact@v2
+      with:
+        name: cardlogic
+        path: ${{ github.workspace }}/com.foss.llamas.poker/lib/build/libs/**.jar
+        retention-days: 1
+  style:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./com.foss.llamas.poker
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+        cache: gradle
+    - name: Grant execute for gradlew and scripts
+      run: |
+        chmod +x gradlew
+    - name: Check Editorconfig
+      run: |
+        ./gradlew editorconfigCheck
