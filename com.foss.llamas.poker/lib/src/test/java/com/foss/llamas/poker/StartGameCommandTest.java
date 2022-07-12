@@ -12,26 +12,30 @@ import com.foss.llamas.poker.domain.commands.StartGameCommand;
 
 public class StartGameCommandTest extends BaseCommandTest<StartGameCommand> {
 
+	private StartGameCommand command;
+	
+	private Map<String, Optional<String>> input;
+	
 	@ParameterizedTest
 	@MethodSource
 	@Override
     public void testCommand(Map<String, Optional<String>> input) {
-    	    	
-		StartGameCommand startGameCommand = getCommandFromJCommander(
-			input);
     	
-		checkPlayerName(startGameCommand, input);
+    	this.input = input;
+    	this.command = getCommandFromJCommander(input);
+    	
+		checkPlayerName();
 		
-		checkJokerCount(startGameCommand, input);
+		checkJokerCount();
 		
-		checkJoinDelay(startGameCommand, input);
+		checkJoinDelay();
 
-		checkMaxPlayers(startGameCommand, input);
+		checkMaxPlayers();
 		
-		checkAnte(startGameCommand, input);
+		checkAnte();
     }
 	
-	private void checkJokerCount(StartGameCommand command, Map<String, Optional<String>> input) {
+	private void checkJokerCount() {
     	Assertions.assertEquals(
     		String.valueOf(command.getJokerCount()), 
     		getValue(
@@ -41,7 +45,7 @@ public class StartGameCommandTest extends BaseCommandTest<StartGameCommand> {
 	    		StartGameCommand.JOKER_COUNT_FLAG_LONG));
 	}
 
-	private void checkJoinDelay(StartGameCommand command, Map<String, Optional<String>> input) {
+	private void checkJoinDelay() {
 	 	Assertions.assertEquals(
 			String.valueOf(command.getJoinDelay()), 
 			getValue(
@@ -51,7 +55,7 @@ public class StartGameCommandTest extends BaseCommandTest<StartGameCommand> {
 	    		StartGameCommand.JOIN_DELAY_FLAG_LONG));
 	}
 	
-	private void checkAnte(StartGameCommand command, Map<String, Optional<String>> input) {
+	private void checkAnte() {
     	Assertions.assertEquals(
     		String.valueOf(command.getAnte()), 
     		getValue(
@@ -61,7 +65,7 @@ public class StartGameCommandTest extends BaseCommandTest<StartGameCommand> {
 	    		StartGameCommand.ANTE_FLAG_LONG));
 	}
 	
-	private void checkMaxPlayers(StartGameCommand command, Map<String, Optional<String>> input) {
+	private void checkMaxPlayers() {
     	Assertions.assertEquals(
     		String.valueOf(command.getMaxPlayers()), 
     		getValue(
@@ -96,6 +100,16 @@ public class StartGameCommandTest extends BaseCommandTest<StartGameCommand> {
 	@Override
 	protected String getCommandName() {
 		return StartGameCommand.COMMAND_NAME;
+	}
+
+	@Override
+	protected Map<String, Optional<String>> getInput() {
+		return input;
+	}
+
+	@Override
+	protected StartGameCommand getCommand() {
+		return command;
 	}
 
 	// TODO: Consider using this.

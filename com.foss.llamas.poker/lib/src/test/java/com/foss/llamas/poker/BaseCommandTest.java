@@ -285,17 +285,17 @@ public abstract class BaseCommandTest<T extends BaseCommand> {
 		
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected Class<T> getClassType() {
       return ((Class) ((ParameterizedType) getClass()
           .getGenericSuperclass()).getActualTypeArguments()[0]);
     }
     
-	protected void checkPlayerName(T command, Map<String, Optional<String>> input) {
+	protected void checkPlayerName() {
     	Assertions.assertEquals(
-    		String.valueOf(command.getDelegate().getPlayerName()), 
+    		String.valueOf(getCommand().getDelegate().getPlayerName()), 
     		getValue(
-	    		input, 
+	    		getInput(), 
 	    		getPlayerName(), 
 	    		CommandDelegate.PLAYER_FLAG_SHORT,
 	    		CommandDelegate.PLAYER_FLAG_LONG));
@@ -304,4 +304,8 @@ public abstract class BaseCommandTest<T extends BaseCommand> {
     protected abstract String getCommandName();
     
     public abstract void testCommand(Map<String, Optional<String>> input);
+    
+    protected abstract Map<String, Optional<String>> getInput();
+    
+    protected abstract T getCommand();
 }
