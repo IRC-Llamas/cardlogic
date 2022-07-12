@@ -37,3 +37,23 @@ jobs:
         name: cardlogic
         path: ${{ github.workspace }}/com.foss.llamas.poker/lib/build/libs/**.jar
         retention-days: 1
+  style:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./com.foss.llamas.poker
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+        cache: gradle
+    - name: Grant execute for gradlew and scripts
+      run: |
+        chmod +x gradlew
+    - name: Check Editorconfig
+      run: |
+        ./gradlew checkEditorConfig
