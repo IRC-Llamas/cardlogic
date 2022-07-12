@@ -6,13 +6,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.foss.llamas.poker.domain.StandardCard;
-import com.foss.llamas.poker.domain.Card;
-import com.foss.llamas.poker.domain.Color;
-import com.foss.llamas.poker.domain.HandEvaluatorBuilder;
-import com.foss.llamas.poker.domain.HandEvaluatorUtil;
-import com.foss.llamas.poker.domain.Rank;
-import com.foss.llamas.poker.domain.Suit;
 import com.foss.llamas.poker.domain.evaluators.PairEvaluator;
 import com.foss.llamas.poker.domain.evaluators.StraightEvaluator;
 
@@ -52,13 +45,15 @@ public class HandEvaluatorTest {
 	@Test 
 	public void testStraight() {
 		List<Card> cards = new ArrayList<>(5);
-		
+		HandResult eval = new StraightEvaluator();
+
 		cards.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
 		cards.add(StandardCard.build(Rank.ACE, Suit.HEARTS));
 		cards.add(StandardCard.build(Rank.THREE, Suit.SPADES));
 		cards.add(StandardCard.build(Rank.FOUR, Suit.CLUBS));
 		cards.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
-		Assertions.assertFalse(new StraightEvaluator().test(cards));
+		Assertions.assertFalse(eval.test(cards));
+		Assertions.assertTrue(doesResultContainCards(eval, cards));
 
 		cards.clear();
 		cards.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
@@ -66,7 +61,8 @@ public class HandEvaluatorTest {
 		cards.add(StandardCard.build(Rank.THREE, Suit.SPADES));
 		cards.add(StandardCard.build(Rank.FOUR, Suit.CLUBS));
 		cards.add(StandardCard.build(Rank.FIVE, Suit.DIAMONDS));
-		Assertions.assertTrue(new StraightEvaluator().test(cards));
+		Assertions.assertTrue(eval.test(cards));
+		Assertions.assertTrue(doesResultContainCards(eval, cards));
 
 		cards.clear();
 		cards.add(StandardCard.build(Rank.TEN, Suit.DIAMONDS));
@@ -74,7 +70,8 @@ public class HandEvaluatorTest {
 		cards.add(StandardCard.build(Rank.QUEEN, Suit.SPADES));
 		cards.add(StandardCard.build(Rank.KING, Suit.CLUBS));
 		cards.add(StandardCard.build(Rank.ACE, Suit.DIAMONDS));
-		Assertions.assertTrue(new StraightEvaluator().test(cards));
+		Assertions.assertTrue(eval.test(cards));
+		Assertions.assertTrue(doesResultContainCards(eval, cards));
 		
 		cards.clear();
 		cards.add(StandardCard.build(Rank.JACK, Suit.CLUBS));
@@ -82,7 +79,8 @@ public class HandEvaluatorTest {
 		cards.add(StandardCard.build(Rank.KING, Suit.SPADES));
 		cards.add(StandardCard.build(Rank.ACE, Suit.CLUBS));
 		cards.add(StandardCard.build(Rank.TWO, Suit.DIAMONDS));
-		Assertions.assertFalse(new StraightEvaluator().test(cards));
+		Assertions.assertFalse(eval.test(cards));
+		Assertions.assertTrue(doesResultContainCards(eval, cards));
 		
 		cards.clear();
 		cards.add(StandardCard.build(Rank.SEVEN, Suit.CLUBS));
@@ -90,7 +88,8 @@ public class HandEvaluatorTest {
 		cards.add(StandardCard.build(Rank.NINE, Suit.SPADES));
 		cards.add(StandardCard.build(Rank.TEN, Suit.CLUBS));
 		cards.add(StandardCard.build(Rank.JACK, Suit.DIAMONDS));
-		Assertions.assertTrue(new StraightEvaluator().test(cards));
+		Assertions.assertTrue(eval.test(cards));
+		Assertions.assertTrue(doesResultContainCards(eval, cards));
 
 		cards.clear();
 		cards.add(StandardCard.build(Rank.JOKER, Suit.JOKER));
@@ -98,6 +97,19 @@ public class HandEvaluatorTest {
 		cards.add(StandardCard.build(Rank.FIVE, Suit.SPADES));
 		cards.add(StandardCard.build(Rank.SIX, Suit.CLUBS));
 		cards.add(StandardCard.build(Rank.SEVEN, Suit.DIAMONDS));
-		Assertions.assertTrue(new StraightEvaluator().test(cards));
+		Assertions.assertTrue(eval.test(cards));
+		Assertions.assertTrue(doesResultContainCards(eval, cards));
+	}
+
+	private boolean doesResultContainCards(HandResult result, List<Card> cards) {
+		for (Card card : cards) {
+			if (card.getRank() == Rank.JOKER) {
+				continue;
+			}
+			if (!result.getCards().contains(card)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
