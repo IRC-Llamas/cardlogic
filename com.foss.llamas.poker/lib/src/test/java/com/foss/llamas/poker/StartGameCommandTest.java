@@ -22,6 +22,7 @@ public class StartGameCommandTest extends BaseCommandTest<StartGameCommand> {
     public void testCommand(Map<String, Optional<String>> input) {
     	
     	this.input = input;
+    	
     	this.command = getCommandFromJCommander(input);
     	
 		checkPlayerName();

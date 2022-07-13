@@ -8,7 +8,7 @@ import com.beust.jcommander.ParametersDelegate;
 public class CheckMoneyCommand {
 
 	@Parameter
-	private String playerName;
+	private String targetPlayerName;
 	
 	@ParametersDelegate
 	private CommandDelegate delegate = new CommandDelegate();

@@ -115,39 +115,6 @@ public abstract class BaseCommandTest<T extends BaseCommand> {
     }
 
     @Test
-    void testCancelGameCommand() {
-    	resetJCommander();
-
-    	List<String> argumentsList = new ArrayList<>();
-    	argumentsList.add(CancelGameCommand.COMMAND_NAME);
-    	argumentsList.add("--player=joe");
-    	
-    	String arguments[] = tokenize(String.join(" ", argumentsList));
-    	
-    	jc.parse(arguments);
-    	
-    	String commandName = jc.getParsedCommand();
-    	
-    	Assertions.assertEquals(CancelGameCommand.COMMAND_NAME, commandName);
-    	
-    	Assertions.assertFalse(jc.getCommands().isEmpty());
-    	
-    	jc = jc.getCommands().get(commandName);
-    	
-    	Assertions.assertFalse(jc.getObjects().isEmpty());
-    	
-    	Object command = jc.getObjects().iterator().next();
-    	
-    	boolean isCorrectCommand = (command instanceof CancelGameCommand);
-    	
-    	Assertions.assertTrue(isCorrectCommand);
-    	
-    	CancelGameCommand cancelGameComand = (CancelGameCommand)command;
-    	
-    	Assertions.assertEquals(cancelGameComand.getDelegate().getPlayerName(), getPlayerName());
-    }
-
-    @Test
     void testJoinGameCommand() {
     	resetJCommander();
     }
