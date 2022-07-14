@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./com.foss.llamas.poker
+        working-directory: ./chat.llamas.cardlogic
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
@@ -35,13 +35,13 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: cardlogic
-        path: ${{ github.workspace }}/com.foss.llamas.poker/lib/build/libs/**.jar
+        path: ${{ github.workspace }}/chat.llamas.cardlogic/lib/build/libs/**.jar
         retention-days: 1
   style:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./com.foss.llamas.poker
+        working-directory: ./chat.llamas.cardlogic
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
