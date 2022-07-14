@@ -20,9 +20,9 @@ public interface GameMessageInterface {
 	
 	MessageScope getMessageScope();
 	
-	Optional<Player> getRecipient();
+	Optional<PlayerInterface> getRecipient();
 	
-	Optional<Player> getSender();
+	Optional<PlayerInterface> getSender();
 	
 	String getMessage();
 }

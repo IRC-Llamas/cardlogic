@@ -38,11 +38,11 @@ import chat.llamas.cardlogic.domain.commands.RaiseCommand;
 import chat.llamas.cardlogic.domain.commands.ShowCommand;
 import chat.llamas.cardlogic.domain.commands.StartGameCommand;
 import chat.llamas.cardlogic.domain.commands.ViewCardsCommand;
-import chat.llamas.cardlogic.domain.game.Player;
+import chat.llamas.cardlogic.domain.game.PlayerInterface;
 
 public class Game implements GameInterface {
 
-	private Map<Player, Boolean> players = new LinkedHashMap<>();
+	private Map<PlayerInterface, Boolean> players = new LinkedHashMap<>();
 	
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -113,13 +113,13 @@ public class Game implements GameInterface {
 	}
 
 	@Override
-	public Player getStartingPlayer() {
+	public PlayerInterface getStartingPlayer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<Player, Boolean> getPlayers() {
+	public Map<PlayerInterface, Boolean> getPlayers() {
 		return players;
 	}
 }

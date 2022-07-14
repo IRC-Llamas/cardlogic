@@ -21,8 +21,8 @@ import chat.llamas.cardlogic.domain.commands.MuckCommand;
 import chat.llamas.cardlogic.domain.commands.RaiseCommand;
 import chat.llamas.cardlogic.domain.commands.ShowCommand;
 import chat.llamas.cardlogic.domain.commands.ViewCardsCommand;
-import chat.llamas.cardlogic.domain.game.Player;
-import chat.llamas.cardlogic.domain.game.RoundCompletionDetails;
+import chat.llamas.cardlogic.domain.game.PlayerInterface;
+import chat.llamas.cardlogic.domain.game.RoundCompletionDetailsInterface;
 import chat.llamas.cardlogic.domain.game.RoundType;
 import io.reactivex.rxjava3.core.Observable;
 
@@ -43,11 +43,11 @@ public interface RoundEventManagerInterface {
 	
 	Observable<ViewCardsCommand> onPeek();
 	
-	Observable<Player> onNextPlayerTurn();
+	Observable<PlayerInterface> onNextPlayerTurn();
 	
 	Observable<RoundType> onNextRoundTurn();
 	
-	Observable<RoundCompletionDetails> onRoundComplete(); 
+	Observable<RoundCompletionDetailsInterface> onRoundComplete(); 
 	
 	void doFold(FoldCommand command);
 	

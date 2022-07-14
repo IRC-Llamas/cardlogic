@@ -11,24 +11,32 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package chat.llamas.cardlogic;
+package chat.llamas.cardlogic.domain.impl;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
+import chat.llamas.cardlogic.domain.game.RoundCompletionDetailsInterface;
+import chat.llamas.cardlogic.domain.game.RoundType;
 
-public interface IPot {
+public class RoundCompletionDetails implements RoundCompletionDetailsInterface {
+	private Map<PlayerInterface, BigDecimal> potWinnings;
 	
-	RoundInterface getRound();
+	private RoundType finishTurn;
+	
+	public RoundCompletionDetails(Map<PlayerInterface, BigDecimal> potWinnings, RoundType finishTurn) {
+		this.potWinnings = potWinnings;
+		this.finishTurn = finishTurn;
+	}
 
-	Map<PlayerInterface, BigDecimal> getPot();
-	
-	Map<PlayerInterface, BigDecimal> getUnsatisfiedPot();
-	
-	BigDecimal getPotSize();
-	
-	default boolean isPotSatisfied() {
-		return getUnsatisfiedPot().isEmpty();
+	@Override
+	public Map<PlayerInterface, BigDecimal> getPotWinnings() {
+		return potWinnings;
+	}
+
+	@Override
+	public RoundType getFinishTurn() {
+		return finishTurn;
 	}
 }

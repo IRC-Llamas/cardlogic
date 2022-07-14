@@ -13,7 +13,7 @@
 // limitations under the License.
 package chat.llamas.cardlogic;
 
-import chat.llamas.cardlogic.domain.game.Player;
+import chat.llamas.cardlogic.domain.game.PlayerInterface;
 
 public interface TurnManagerInterface {
 	
@@ -21,7 +21,7 @@ public interface TurnManagerInterface {
 	
 	void nextTurn();
 	
-	Player getCurrentTurnPlayer();
+	PlayerInterface getCurrentTurnPlayer();
 	
-	Player getNextTurnPlayer();
+	PlayerInterface getNextTurnPlayer();
 }

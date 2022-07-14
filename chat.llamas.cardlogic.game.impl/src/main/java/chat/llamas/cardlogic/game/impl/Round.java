@@ -25,7 +25,7 @@ import chat.llamas.cardlogic.RoundInterface;
 import chat.llamas.cardlogic.TurnManagerInterface;
 import chat.llamas.cardlogic.domain.Card;
 import chat.llamas.cardlogic.domain.DeckInterface;
-import chat.llamas.cardlogic.domain.game.Player;
+import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import chat.llamas.cardlogic.domain.game.RoundType;
 
 public class Round implements RoundInterface {
@@ -38,15 +38,15 @@ public class Round implements RoundInterface {
 	
 	private List<Card> burnCards;
 	
-	private Map<Player, List<Card>> holeCards;
+	private Map<PlayerInterface, List<Card>> holeCards;
 	
 	private List<Card> communityCards;
 	
-	public void join(Player player) {
+	public void join(PlayerInterface player) {
 		
 	}
 	
-	public void leave(Player player) {
+	public void leave(PlayerInterface player) {
 		
 	}
 	
@@ -54,7 +54,7 @@ public class Round implements RoundInterface {
 		
 	}
 	
-	public void fold(Player player) {
+	public void fold(PlayerInterface player) {
 		
 	}
 	
@@ -63,7 +63,7 @@ public class Round implements RoundInterface {
 	}
 
 	@Override
-	public Map<Player, Boolean> getPlayers() {
+	public Map<PlayerInterface, Boolean> getPlayers() {
 		// TODO Auto-generated method stub
 		return null;
 	}

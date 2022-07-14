@@ -11,10 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package chat.llamas.cardlogic.domain.game;
+package chat.llamas.cardlogic.domain.impl;
 
 import java.math.BigDecimal;
 
+import chat.llamas.cardlogic.domain.game.GameMessageInterface;
+import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import io.reactivex.rxjava3.core.Observable;
 import jakarta.persistence.Entity;
 
