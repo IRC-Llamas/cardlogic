@@ -1,5 +1,8 @@
 package chat.llamas.cardlogic;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.naming.OperationNotSupportedException;
 
 import chat.llamas.cardlogic.domain.GameState;
@@ -20,4 +23,6 @@ public interface GameInterface {
 	GameEventManagerInterface getGameEventManager();
 	
 	Player getStartingPlayer();
+	
+	Map<Player, Boolean> getPlayers();
 }

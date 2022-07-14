@@ -119,8 +119,7 @@ public class GameEventManager implements GameEventManagerInterface {
 			RoundInterface round = getGame().getCurrentRound();
 			
 			if (Objects.equals(round.getRoundType(), RoundType.PRE_GAME)) {
-				
-				// TODO: Add the player to the game.
+				//if (!game.getPlayers().containsKey(round))
 			}
 			else {
 				throw new UnsupportedOperationException("Game is already in progress.");

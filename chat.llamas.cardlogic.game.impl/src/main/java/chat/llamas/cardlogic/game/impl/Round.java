@@ -19,8 +19,6 @@ public class Round implements RoundInterface {
 	
 	private RoundType roundType = RoundType.PRE_GAME;
 	
-	private Map<Player, Boolean> players = new LinkedHashMap<>();
-	
 	private int roundCount;
 	
 	private DeckInterface deck;

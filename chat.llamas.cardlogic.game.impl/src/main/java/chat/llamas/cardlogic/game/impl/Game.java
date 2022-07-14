@@ -3,6 +3,9 @@
  */
 package chat.llamas.cardlogic.game.impl;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.beust.jcommander.JCommander;
 
 import chat.llamas.cardlogic.GameEventManagerInterface;
@@ -25,7 +28,8 @@ import chat.llamas.cardlogic.domain.commands.ViewCardsCommand;
 import chat.llamas.cardlogic.domain.game.Player;
 
 public class Game implements GameInterface {
-	
+
+	private Map<Player, Boolean> players = new LinkedHashMap<>();
 	
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -101,4 +105,8 @@ public class Game implements GameInterface {
 		return null;
 	}
 
+	@Override
+	public Map<Player, Boolean> getPlayers() {
+		return players;
+	}
 }

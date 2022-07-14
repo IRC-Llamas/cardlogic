@@ -3,7 +3,9 @@ package chat.llamas.cardlogic.domain.game;
 import java.math.BigDecimal;
 
 import io.reactivex.rxjava3.core.Observable;
+import jakarta.persistence.Entity;
 
+@Entity
 public class Player implements PlayerInterface {
 	private String name;
 	
