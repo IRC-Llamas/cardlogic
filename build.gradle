@@ -1,0 +1,3 @@
+subprojects { subproject ->
+    subproject.apply plugin: 'eclipse'
+}
