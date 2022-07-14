@@ -23,7 +23,7 @@ import chat.llamas.cardlogic.domain.commands.CancelGameCommand;
 import chat.llamas.cardlogic.domain.commands.JoinGameCommand;
 import chat.llamas.cardlogic.domain.commands.LeaveGameCommand;
 import chat.llamas.cardlogic.domain.commands.StartGameCommand;
-import chat.llamas.cardlogic.domain.game.Player;
+import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import io.reactivex.rxjava3.core.Observable;
 
 public interface GameInterface {
@@ -35,7 +35,7 @@ public interface GameInterface {
 	
 	GameEventManagerInterface getGameEventManager();
 	
-	Player getStartingPlayer();
+	PlayerInterface getStartingPlayer();
 	
-	Map<Player, Boolean> getPlayers();
+	Map<PlayerInterface, Boolean> getPlayers();
 }

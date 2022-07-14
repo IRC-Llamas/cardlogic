@@ -18,18 +18,18 @@ import java.util.Optional;
 import chat.llamas.cardlogic.domain.game.GameMessageInterface;
 import chat.llamas.cardlogic.domain.game.MessageScope;
 import chat.llamas.cardlogic.domain.game.MessageType;
-import chat.llamas.cardlogic.domain.game.Player;
+import chat.llamas.cardlogic.domain.game.PlayerInterface;
 
 public class GameMessage implements GameMessageInterface {
 	private MessageType messageType;
 	private MessageScope messageScope;
-	private Optional<Player> sender;
-	private Optional<Player> recipient;
+	private Optional<PlayerInterface> sender;
+	private Optional<PlayerInterface> recipient;
 	private String message;
 	public GameMessage(MessageType messageType,
 		MessageScope messageScope,
-		Optional<Player> sender,
-		Optional<Player> recipient,
+		Optional<PlayerInterface> sender,
+		Optional<PlayerInterface> recipient,
 		String message) {
 		this.messageType = messageType;
 		this.messageScope = messageScope;
@@ -48,12 +48,12 @@ public class GameMessage implements GameMessageInterface {
 	}
 
 	@Override
-	public Optional<Player> getRecipient() {
+	public Optional<PlayerInterface> getRecipient() {
 		return recipient;
 	}
 
 	@Override
-	public Optional<Player> getSender() {
+	public Optional<PlayerInterface> getSender() {
 		return sender;
 	}
 

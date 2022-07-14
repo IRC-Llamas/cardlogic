@@ -18,13 +18,13 @@ import java.util.Map;
 
 import chat.llamas.cardlogic.domain.Card;
 import chat.llamas.cardlogic.domain.DeckInterface;
-import chat.llamas.cardlogic.domain.game.Player;
+import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import chat.llamas.cardlogic.domain.game.RoundType;
 
 public interface RoundInterface {
 	long getRoundID();
 	
-	Map<Player, Boolean> getPlayers();
+	Map<PlayerInterface, Boolean> getPlayers();
 	
 	IPot getPot();
 	
@@ -34,9 +34,9 @@ public interface RoundInterface {
 	
 	List<Card> getBurnCards();
 		
-	void join(Player player);
+	void join(PlayerInterface player);
 	
-	void leave(Player player);
+	void leave(PlayerInterface player);
 	
 	void nextRound();
 	
