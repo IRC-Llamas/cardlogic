@@ -11,6 +11,7 @@ plugins {
     id 'java-library'
     id "org.jetbrains.kotlin.jvm" version "1.7.10"
     id 'org.ec4j.editorconfig' version '0.0.3'
+    id 'groovy'
 }
 // check.dependsOn editorconfigCheck
 
@@ -48,6 +49,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 
+    implementation 'org.codehaus.groovy:groovy-all:2.4.15'
 }
 
 tasks.named('test') {
@@ -63,4 +65,15 @@ compileKotlin {
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named('compileGroovy') {
+    // Groovy only needs the declared dependencies
+    // (and not longer the output of compileJava)
+    classpath = sourceSets.main.compileClasspath
+}
+tasks.named('compileKotlin') {
+    // Kotlin also depends on the result of Groovy compilation
+    // (which automatically makes it depend of compileGroovy)
+    classpath += files(sourceSets.main.groovy.classesDirectory)
 }
