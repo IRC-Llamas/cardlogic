@@ -73,7 +73,7 @@ public class StartGameCommand implements BaseCommand {
 		return joinDelay;
 	}
 
-	public CommandDelegate getDelegate() {
+	public final CommandDelegate getDelegate() {
 		return delegate;
 	}
 }

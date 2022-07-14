@@ -2,8 +2,9 @@ package com.foss.llamas.poker.domain.commands;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
+import com.foss.llamas.poker.GameConstants;
 
-@Parameters(separators = "=")
+@Parameters(separators = GameConstants.COMMAND_SEPARATOR)
 public class CommandDelegate {
 	public static final String PLAYER_FLAG_LONG = "--player";
 	
