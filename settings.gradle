@@ -8,4 +8,7 @@
  */
 
 rootProject.name = 'chat.llamas.cardlogic'
-include('lib')
+include('chat.llamas.cardlogic.domain.api')
+include('chat.llamas.cardlogic.domain.impl')
+include('chat.llamas.cardlogic.game.api')
+include('chat.llamas.cardlogic.game.impl')
