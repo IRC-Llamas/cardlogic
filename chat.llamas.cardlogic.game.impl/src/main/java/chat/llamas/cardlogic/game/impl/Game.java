@@ -19,6 +19,8 @@ package chat.llamas.cardlogic.game.impl;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.naming.OperationNotSupportedException;
+
 import com.beust.jcommander.JCommander;
 
 import chat.llamas.cardlogic.domain.ArgumentTokenizer;
@@ -36,7 +38,8 @@ import chat.llamas.cardlogic.domain.commands.ShowCommand;
 import chat.llamas.cardlogic.domain.commands.StartGameCommand;
 import chat.llamas.cardlogic.domain.commands.ViewCardsCommand;
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
-import chat.llamas.cardlogic.game.api.GameEventManagerInterface;
+import chat.llamas.cardlogic.game.api.CommandEventBusInterface;
+import chat.llamas.cardlogic.game.api.GameEventMediatorInterface;
 import chat.llamas.cardlogic.game.api.GameInterface;
 import chat.llamas.cardlogic.game.api.RoundInterface;
 
@@ -44,55 +47,8 @@ public class Game implements GameInterface {
 
 	private Map<PlayerInterface, Boolean> players = new LinkedHashMap<>();
 	
-	public static void main(String[] args) {
-		Game game = new Game();
-		
-		game.acceptCommand("startgame --player=joe --joker-count=2");
-	}
 	private GameState gameState = GameState.INACTIVE;
-	
-	public void acceptCommand(String string) {
-		
-		String[] argv = ArgumentTokenizer.tokenize(string).toArray(String[]::new);
-		
-		// Game Commands
-		StartGameCommand startGameCommand = new StartGameCommand();
-		CancelGameCommand cancelGameCommand = new CancelGameCommand();
-		JoinGameCommand joinGameCommand = new JoinGameCommand();
-		LeaveGameCommand leaveGameCommand = new LeaveGameCommand();
-		
-		// Round Commands
-		FoldCommand foldCommand = new FoldCommand();
-		MuckCommand muckCommand = new MuckCommand();
-		ShowCommand showCommand = new ShowCommand();
-		CallCommand callCommand = new CallCommand();
-		RaiseCommand raiseCommand = new RaiseCommand();
-		BetCommand betCommand = new BetCommand();
-		CheckCommand checkCommand = new CheckCommand();
-		ViewCardsCommand viewCardsCommand = new ViewCardsCommand();
-		
-		// Admin Commands
-		// TODO: Add here.
-		
-		JCommander jc = JCommander.newBuilder()
-				.addCommand(startGameCommand)
-				.addCommand(cancelGameCommand)
-				.addCommand(joinGameCommand)
-				.addCommand(leaveGameCommand)
-				.addCommand(foldCommand)
-				.addCommand(muckCommand)
-				.addCommand(showCommand)
-				.addCommand(callCommand)
-				.addCommand(raiseCommand)
-				.addCommand(betCommand)
-				.addCommand(checkCommand)
-				.addCommand(viewCardsCommand)
-			  .build();
-			jc.parse(argv);
-		System.out.println( jc.getParsedCommand() );
-		System.out.println(startGameCommand.getJokerCount());
-	}
-	
+
 	private RoundInterface currentRound = null;
 
 	@Override
@@ -107,7 +63,7 @@ public class Game implements GameInterface {
 	}
 
 	@Override
-	public GameEventManagerInterface getGameEventManager() {
+	public GameEventMediatorInterface getGameEventMediator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -121,5 +77,17 @@ public class Game implements GameInterface {
 	@Override
 	public Map<PlayerInterface, Boolean> getPlayers() {
 		return players;
+	}
+
+	@Override
+	public void acceptCommand(String command) throws OperationNotSupportedException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public CommandEventBusInterface getEventBus() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

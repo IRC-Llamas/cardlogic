@@ -18,7 +18,7 @@ import com.beust.jcommander.ParametersDelegate;
 import chat.llamas.cardlogic.GameConstants;
 
 @Parameters(commandNames = ViewCardsCommand.COMMAND_NAME, separators = GameConstants.COMMAND_SEPARATOR)
-public class ViewCardsCommand {
+public class ViewCardsCommand implements BaseCommand {
 
 	public static final String COMMAND_NAME = "peek";
 	
@@ -27,5 +27,10 @@ public class ViewCardsCommand {
 
 	public final CommandDelegate getDelegate() {
 		return delegate;
+	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
 	}
 }

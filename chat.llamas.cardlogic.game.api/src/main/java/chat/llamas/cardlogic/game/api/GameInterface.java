@@ -33,9 +33,11 @@ public interface GameInterface {
 	
 	GameState getGameState();
 	
-	GameEventManagerInterface getGameEventManager();
+	GameEventMediatorInterface getGameEventMediator();
 	
 	PlayerInterface getStartingPlayer();
 	
 	Map<PlayerInterface, Boolean> getPlayers();
+	
+	public CommandEventBusInterface getEventBus();
 }

@@ -19,7 +19,7 @@ import com.beust.jcommander.ParametersDelegate;
 import chat.llamas.cardlogic.GameConstants;
 
 @Parameters(commandNames = CheckMoneyCommand.COMMAND_NAME, separators = GameConstants.COMMAND_SEPARATOR)
-public class CheckMoneyCommand {
+public class CheckMoneyCommand implements BaseCommand {
 
 	public static final String COMMAND_NAME = "checkmoney";
 	
@@ -35,5 +35,10 @@ public class CheckMoneyCommand {
 
 	public String getTargetPlayerName() {
 		return targetPlayerName;
+	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
 	}
 }

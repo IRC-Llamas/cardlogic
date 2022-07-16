@@ -19,29 +19,20 @@ import chat.llamas.cardlogic.domain.GameState;
 import chat.llamas.cardlogic.domain.commands.CancelGameCommand;
 import chat.llamas.cardlogic.domain.commands.JoinGameCommand;
 import chat.llamas.cardlogic.domain.commands.LeaveGameCommand;
+import chat.llamas.cardlogic.domain.commands.MessageCommand;
 import chat.llamas.cardlogic.domain.commands.StartGameCommand;
 import chat.llamas.cardlogic.domain.game.GameMessageInterface;
 import chat.llamas.cardlogic.domain.game.RoundType;
-import chat.llamas.cardlogic.game.api.GameEventManagerInterface;
+import chat.llamas.cardlogic.game.api.GameEventMediatorInterface;
 import chat.llamas.cardlogic.game.api.GameInterface;
 import chat.llamas.cardlogic.game.api.RoundInterface;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class GameEventManager implements GameEventManagerInterface {
+public class GameEventManager implements GameEventMediatorInterface {
 
 	private GameInterface game;
 
-	private PublishSubject<StartGameCommand> startGameEventPublisher;
-	
-	private PublishSubject<CancelGameCommand> cancelGameEventPublisher;
-
-	private PublishSubject<JoinGameCommand> joinGameEventPublisher;
-	
-	private PublishSubject<LeaveGameCommand> leaveGameEventPublisher;
-	
-	private PublishSubject<GameMessageInterface> messageEventPublisher;
-	
 	public GameEventManager(GameInterface game) {
 		this.game = game;
 	}
@@ -50,76 +41,7 @@ public class GameEventManager implements GameEventManagerInterface {
 	public GameInterface getGame() {
 		return game;
 	}
-
-	@Override
-	public Observable<StartGameCommand> onStartGame() {
-		return getStartGameEventPublisher();
-	}
 	
-	private PublishSubject<StartGameCommand> getStartGameEventPublisher() {
-		if (Objects.isNull(startGameEventPublisher)) {
-			startGameEventPublisher = PublishSubject.create();
-		}
-		return startGameEventPublisher;
-		
-	}
-
-	@Override
-	public Observable<CancelGameCommand> onCancelGame() {
-		return getCancelGameEventPublisher();
-		
-	}
-
-	private PublishSubject<CancelGameCommand> getCancelGameEventPublisher() {
-		if (Objects.isNull(cancelGameEventPublisher)) {
-			cancelGameEventPublisher = PublishSubject.create();
-		}
-		return cancelGameEventPublisher;
-		
-	}
-	
-	@Override
-	public Observable<JoinGameCommand> onJoinGame() {
-		return getJoinGameEventPublisher();
-	}
-	
-	private PublishSubject<JoinGameCommand> getJoinGameEventPublisher() {
-		if (Objects.isNull(joinGameEventPublisher)) {
-			joinGameEventPublisher = PublishSubject.create();
-		}
-		return joinGameEventPublisher;
-		
-	}
-	
-	@Override
-	public Observable<LeaveGameCommand> onLeaveGame() {
-		return getLeaveGameEventPublisher();
-	}
-	
-	private PublishSubject<LeaveGameCommand> getLeaveGameEventPublisher() {
-		if (Objects.isNull(leaveGameEventPublisher)) {
-			leaveGameEventPublisher = PublishSubject.create();
-		}
-		return leaveGameEventPublisher;
-		
-	}
-
-	private PublishSubject<GameMessageInterface> getMessageEventPublisher() {
-		if (Objects.isNull(messageEventPublisher)) {
-			messageEventPublisher = PublishSubject.create();
-		}
-		return messageEventPublisher;
-	}
-	@Override
-	public Observable<GameMessageInterface> onMessage() {
-		return getMessageEventPublisher();
-	}
-
-	@Override
-	public void sendMessage(GameMessageInterface message) {
-		getMessageEventPublisher().onNext(message);
-	}
-
 	@Override
 	public void cancelGame(CancelGameCommand command) throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
@@ -158,23 +80,8 @@ public class GameEventManager implements GameEventManagerInterface {
 	}
 
 	@Override
-	public void fireStartGame(StartGameCommand command) {
-		getStartGameEventPublisher().onNext(command);
+	public void sendMessage(MessageCommand command) throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		
 	}
-
-	@Override
-	public void fireCancelGameCommand(CancelGameCommand command) {
-		getCancelGameEventPublisher().onNext(command);
-	}
-
-	@Override
-	public void fireJoinGameCommand(JoinGameCommand command) {
-		getJoinGameEventPublisher().onNext(command);
-	}
-
-	@Override
-	public void fireLeaveGameCommand(LeaveGameCommand command) {
-		getLeaveGameEventPublisher().onNext(command);
-	}
-
 }

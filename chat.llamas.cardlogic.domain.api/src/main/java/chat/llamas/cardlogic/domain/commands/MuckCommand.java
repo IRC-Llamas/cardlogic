@@ -18,7 +18,7 @@ import com.beust.jcommander.ParametersDelegate;
 import chat.llamas.cardlogic.GameConstants;
 
 @Parameters(commandNames = MuckCommand.COMMAND_NAME, separators = GameConstants.COMMAND_SEPARATOR)
-public class MuckCommand {
+public class MuckCommand implements BaseCommand {
 
 	public static final String COMMAND_NAME = "muck";
 	
@@ -28,4 +28,10 @@ public class MuckCommand {
 	public final CommandDelegate getDelegate() {
 		return delegate;
 	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
+	}
+	
 }

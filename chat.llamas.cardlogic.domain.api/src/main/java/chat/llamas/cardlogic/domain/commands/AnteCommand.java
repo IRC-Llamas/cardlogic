@@ -18,7 +18,7 @@ import com.beust.jcommander.Parameters;
 import com.beust.jcommander.ParametersDelegate;
 
 @Parameters(commandNames = AnteCommand.COMMAND_NAME, separators = "=")
-public class AnteCommand {
+public class AnteCommand implements BaseCommand {
 	public static final String COMMAND_NAME = "ante";
 	
 	@Parameter(names = "--required", description = "Is the ante required to view the hole cards?")
@@ -33,6 +33,11 @@ public class AnteCommand {
 	
 	public final boolean isRequired() {
 		return required;
+	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
 	}
 	
 }

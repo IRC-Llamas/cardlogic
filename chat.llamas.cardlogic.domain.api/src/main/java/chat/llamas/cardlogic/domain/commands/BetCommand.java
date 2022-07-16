@@ -21,7 +21,7 @@ import com.beust.jcommander.ParametersDelegate;
 import chat.llamas.cardlogic.GameConstants;
 
 @Parameters(commandNames = BetCommand.COMMAND_NAME, separators = GameConstants.COMMAND_SEPARATOR)
-public class BetCommand {
+public class BetCommand implements BaseCommand {
 
 	public static final String COMMAND_NAME = "bet";
 	
@@ -33,5 +33,10 @@ public class BetCommand {
 
 	public final CommandDelegate getDelegate() {
 		return delegate;
+	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
 	}
 }

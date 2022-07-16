@@ -18,7 +18,7 @@ import com.beust.jcommander.ParametersDelegate;
 import chat.llamas.cardlogic.GameConstants;
 
 @Parameters(commandNames = LeaveGameCommand.COMMAND_NAME, separators = GameConstants.COMMAND_SEPARATOR)
-public class LeaveGameCommand {
+public class LeaveGameCommand implements BaseCommand {
 
 	public static final String COMMAND_NAME = "leavegame";
 	
@@ -27,5 +27,10 @@ public class LeaveGameCommand {
 	
 	public CommandDelegate getDelegate() {
 		return delegate;
+	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
 	}
 }

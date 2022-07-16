@@ -18,7 +18,7 @@ import com.beust.jcommander.ParametersDelegate;
 import chat.llamas.cardlogic.GameConstants;
 
 @Parameters(commandNames = JoinGameCommand.COMMAND_NAME, separators = GameConstants.COMMAND_SEPARATOR)
-public class JoinGameCommand {
+public class JoinGameCommand implements BaseCommand {
 
 	public static final String COMMAND_NAME = "joingame";
 	
@@ -27,5 +27,10 @@ public class JoinGameCommand {
 	
 	public CommandDelegate getDelegate() {
 		return delegate;
+	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
 	}
 }
