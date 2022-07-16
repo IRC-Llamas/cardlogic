@@ -15,9 +15,6 @@ package chat.llamas.cardlogic.game.impl;
 
 import java.util.Objects;
 
-import chat.llamas.cardlogic.GameEventManagerInterface;
-import chat.llamas.cardlogic.GameInterface;
-import chat.llamas.cardlogic.RoundInterface;
 import chat.llamas.cardlogic.domain.GameState;
 import chat.llamas.cardlogic.domain.commands.CancelGameCommand;
 import chat.llamas.cardlogic.domain.commands.JoinGameCommand;
@@ -25,6 +22,9 @@ import chat.llamas.cardlogic.domain.commands.LeaveGameCommand;
 import chat.llamas.cardlogic.domain.commands.StartGameCommand;
 import chat.llamas.cardlogic.domain.game.GameMessageInterface;
 import chat.llamas.cardlogic.domain.game.RoundType;
+import chat.llamas.cardlogic.game.api.GameEventManagerInterface;
+import chat.llamas.cardlogic.game.api.GameInterface;
+import chat.llamas.cardlogic.game.api.RoundInterface;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 

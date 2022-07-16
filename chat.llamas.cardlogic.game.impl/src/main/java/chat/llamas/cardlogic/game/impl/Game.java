@@ -21,9 +21,6 @@ import java.util.Map;
 
 import com.beust.jcommander.JCommander;
 
-import chat.llamas.cardlogic.GameEventManagerInterface;
-import chat.llamas.cardlogic.GameInterface;
-import chat.llamas.cardlogic.RoundInterface;
 import chat.llamas.cardlogic.domain.ArgumentTokenizer;
 import chat.llamas.cardlogic.domain.GameState;
 import chat.llamas.cardlogic.domain.commands.BetCommand;
@@ -39,6 +36,9 @@ import chat.llamas.cardlogic.domain.commands.ShowCommand;
 import chat.llamas.cardlogic.domain.commands.StartGameCommand;
 import chat.llamas.cardlogic.domain.commands.ViewCardsCommand;
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
+import chat.llamas.cardlogic.game.api.GameEventManagerInterface;
+import chat.llamas.cardlogic.game.api.GameInterface;
+import chat.llamas.cardlogic.game.api.RoundInterface;
 
 public class Game implements GameInterface {
 
