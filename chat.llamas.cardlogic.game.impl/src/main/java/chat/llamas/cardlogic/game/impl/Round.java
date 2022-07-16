@@ -18,15 +18,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import chat.llamas.cardlogic.GameInterface;
-import chat.llamas.cardlogic.IPot;
-import chat.llamas.cardlogic.RoundEventManagerInterface;
-import chat.llamas.cardlogic.RoundInterface;
-import chat.llamas.cardlogic.TurnManagerInterface;
 import chat.llamas.cardlogic.domain.Card;
 import chat.llamas.cardlogic.domain.DeckInterface;
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import chat.llamas.cardlogic.domain.game.RoundType;
+import chat.llamas.cardlogic.game.api.GameInterface;
+import chat.llamas.cardlogic.game.api.IPot;
+import chat.llamas.cardlogic.game.api.RoundEventManagerInterface;
+import chat.llamas.cardlogic.game.api.RoundInterface;
+import chat.llamas.cardlogic.game.api.TurnManagerInterface;
 
 public class Round implements RoundInterface {
 	
