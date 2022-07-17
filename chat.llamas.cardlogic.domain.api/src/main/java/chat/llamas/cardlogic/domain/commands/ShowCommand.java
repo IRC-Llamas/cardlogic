@@ -17,7 +17,7 @@ import com.beust.jcommander.Parameters;
 import com.beust.jcommander.ParametersDelegate;
 
 @Parameters(commandNames = ShowCommand.COMMAND_NAME)
-public class ShowCommand {
+public class ShowCommand implements BaseCommand {
 
 	public static final String COMMAND_NAME = "show";
 	
@@ -26,6 +26,11 @@ public class ShowCommand {
 
 	public final CommandDelegate getDelegate() {
 		return delegate;
+	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
 	}
 
 }

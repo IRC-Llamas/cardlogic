@@ -27,21 +27,6 @@ import chat.llamas.cardlogic.domain.game.RoundType;
 import io.reactivex.rxjava3.core.Observable;
 
 public interface RoundEventManagerInterface {
-	Observable<FoldCommand> onFold();
-	
-	Observable<MuckCommand> onMuck();
-	
-	Observable<ShowCommand> onShow();
-	
-	Observable<CallCommand> onCall();
-	
-	Observable<RaiseCommand> onRaise();
-	
-	Observable<BetCommand> onBet();
-	
-	Observable<CheckCommand> onCheck();
-	
-	Observable<ViewCardsCommand> onPeek();
 	
 	Observable<PlayerInterface> onNextPlayerTurn();
 	

@@ -16,5 +16,16 @@ package chat.llamas.cardlogic.domain.game;
 public enum MessageType {
 	INFO,
 	WARNING,
-	ERROR
+	ERROR;
+	
+    public static MessageType fromString(String code) {
+ 
+        for(MessageType output : MessageType.values()) {
+            if(output.toString().equalsIgnoreCase(code)) {
+                return output;
+            }
+        }
+ 
+        return null;
+    }
 }

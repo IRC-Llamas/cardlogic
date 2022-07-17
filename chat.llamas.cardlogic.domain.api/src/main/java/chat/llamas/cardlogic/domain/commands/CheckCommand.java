@@ -18,7 +18,7 @@ import com.beust.jcommander.ParametersDelegate;
 import chat.llamas.cardlogic.GameConstants;
 
 @Parameters(commandNames = CheckCommand.COMMAND_NAME, separators = GameConstants.COMMAND_SEPARATOR)
-public class CheckCommand {
+public class CheckCommand implements BaseCommand {
 
 	public static final String COMMAND_NAME = "check";
 	
@@ -27,6 +27,11 @@ public class CheckCommand {
 
 	public final CommandDelegate getDelegate() {
 		return delegate;
+	}
+
+	@Override
+	public String getCommandName() {
+		return COMMAND_NAME;
 	}
 
 }

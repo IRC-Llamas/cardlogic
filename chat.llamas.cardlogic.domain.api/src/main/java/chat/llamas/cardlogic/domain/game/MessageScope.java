@@ -16,5 +16,16 @@ package chat.llamas.cardlogic.domain.game;
 public enum MessageScope {
 	NOTICE,
 	PLAYER_PUBLIC,
-	GLOBAL
+	GLOBAL;
+	
+    public static MessageScope fromString(String code) {
+ 
+        for(MessageScope output : MessageScope.values()) {
+            if(output.toString().equalsIgnoreCase(code)) {
+                return output;
+            }
+        }
+ 
+        return null;
+    }
 }

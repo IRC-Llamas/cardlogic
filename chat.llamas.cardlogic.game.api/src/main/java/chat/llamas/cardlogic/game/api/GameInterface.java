@@ -13,16 +13,12 @@
 // limitations under the License.
 package chat.llamas.cardlogic.game.api;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
 
 import chat.llamas.cardlogic.domain.GameState;
-import chat.llamas.cardlogic.domain.commands.CancelGameCommand;
-import chat.llamas.cardlogic.domain.commands.JoinGameCommand;
-import chat.llamas.cardlogic.domain.commands.LeaveGameCommand;
-import chat.llamas.cardlogic.domain.commands.StartGameCommand;
+import chat.llamas.cardlogic.domain.commands.BaseCommand;
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import io.reactivex.rxjava3.core.Observable;
 
@@ -33,9 +29,13 @@ public interface GameInterface {
 	
 	GameState getGameState();
 	
-	GameEventManagerInterface getGameEventManager();
+	GameEventMediatorInterface getGameEventMediator();
 	
 	PlayerInterface getStartingPlayer();
 	
 	Map<PlayerInterface, Boolean> getPlayers();
+	
+	public CommandEventBusInterface getEventBus();
+	
+	void setGameState();
 }
