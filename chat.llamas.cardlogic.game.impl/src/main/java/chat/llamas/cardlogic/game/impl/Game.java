@@ -90,4 +90,10 @@ public class Game implements GameInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void setGameState() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -90,5 +90,5 @@ public interface CommandEventBusInterface {
 
 	<T extends BaseCommand> void executeCommand(T command) throws UnsupportedOperationException;
 	
-	<T extends BaseCommand> Observable<T> onExecute();
+	<T extends BaseCommand> Observable<T> onCommand(Class<T> clazz);
 }

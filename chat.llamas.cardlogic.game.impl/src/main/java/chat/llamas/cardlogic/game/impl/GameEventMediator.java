@@ -20,20 +20,16 @@ import chat.llamas.cardlogic.domain.commands.CancelGameCommand;
 import chat.llamas.cardlogic.domain.commands.JoinGameCommand;
 import chat.llamas.cardlogic.domain.commands.LeaveGameCommand;
 import chat.llamas.cardlogic.domain.commands.MessageCommand;
-import chat.llamas.cardlogic.domain.commands.StartGameCommand;
-import chat.llamas.cardlogic.domain.game.GameMessageInterface;
 import chat.llamas.cardlogic.domain.game.RoundType;
 import chat.llamas.cardlogic.game.api.GameEventMediatorInterface;
 import chat.llamas.cardlogic.game.api.GameInterface;
 import chat.llamas.cardlogic.game.api.RoundInterface;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class GameEventManager implements GameEventMediatorInterface {
+public class GameEventMediator implements GameEventMediatorInterface {
 
 	private GameInterface game;
 
-	public GameEventManager(GameInterface game) {
+	public GameEventMediator(GameInterface game) {
 		this.game = game;
 	}
 	
@@ -44,8 +40,25 @@ public class GameEventManager implements GameEventMediatorInterface {
 	
 	@Override
 	public void cancelGame(CancelGameCommand command) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		
+		if (game.getGameState() == GameState.PENDING) {
+
+			RoundInterface round = getGame().getCurrentRound();
+			
+			if (Objects.equals(round.getRoundType(), RoundType.PRE_GAME)) {
+				if (Objects.equals( game.getStartingPlayer().getName(), command.getDelegate().getPlayerName())) {
+					// TODO: Cancel the game
+				}
+				else {
+					throw new UnsupportedOperationException("Game can only be cancelled by the player who started it.");
+				}
+			}
+			else {
+				throw new UnsupportedOperationException("Game is already in progress.");
+			}
+		}
+		else {
+			throw new UnsupportedOperationException("Game state must be pending to cancel.");
+		}
 	}
 
 	@Override
