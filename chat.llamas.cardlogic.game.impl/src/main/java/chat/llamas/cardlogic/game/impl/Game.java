@@ -50,6 +50,8 @@ public class Game implements GameInterface {
 	private GameState gameState = GameState.INACTIVE;
 
 	private RoundInterface currentRound = null;
+	
+	private CommandEventBusInterface eventBus = null;
 
 	@Override
 	public RoundInterface getCurrentRound() {
@@ -87,8 +89,10 @@ public class Game implements GameInterface {
 
 	@Override
 	public CommandEventBusInterface getEventBus() {
-		// TODO Auto-generated method stub
-		return null;
+		if (eventBus == null) {
+			eventBus = new CommandEventBus();
+		}
+		return eventBus;
 	}
 
 	@Override
