@@ -110,8 +110,7 @@ public class Game implements GameInterface {
 
 	@Override
 	public void acceptCommand(String command) throws OperationNotSupportedException {
-		// TODO Auto-generated method stub
-		
+		getCommandEventBus().execute(command);
 	}
 
 	@Override
