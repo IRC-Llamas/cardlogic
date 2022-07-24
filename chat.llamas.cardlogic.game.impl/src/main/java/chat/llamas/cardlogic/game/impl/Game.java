@@ -18,6 +18,7 @@ package chat.llamas.cardlogic.game.impl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -42,6 +43,10 @@ import chat.llamas.cardlogic.game.api.CommandEventBusInterface;
 import chat.llamas.cardlogic.game.api.GameEventMediatorInterface;
 import chat.llamas.cardlogic.game.api.GameInterface;
 import chat.llamas.cardlogic.game.api.RoundInterface;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class Game implements GameInterface {
 
@@ -52,22 +57,44 @@ public class Game implements GameInterface {
 	private RoundInterface currentRound = null;
 	
 	private CommandEventBusInterface eventBus = null;
+	
+	private PublishSubject<GameState> gameStateChangedEvent;
+	
+	private GameEventMediatorInterface gameEventMediator = null;
+	
+	private Disposable startGameSubscription = null;
+	
+	{
+		this.startGameSubscription = getCommandEventBus().onCommand(StartGameCommand.class).subscribe(this::startGame);
+	}
 
 	@Override
 	public RoundInterface getCurrentRound() {
-		// TODO Auto-generated method stub
-		return null;
+		return currentRound;
 	}
 
 	@Override
 	public GameState getGameState() {
 		return gameState;
 	}
+	
+	private PublishSubject<GameState> getGameStateChangedEvent() {
+		if (Objects.isNull(gameStateChangedEvent)) {
+			gameStateChangedEvent = PublishSubject.create();
+		}
+		return gameStateChangedEvent;
+	}
+	
+	public Observable<GameState> onGameStateChanged() {
+		return getGameStateChangedEvent();
+	}
 
 	@Override
 	public GameEventMediatorInterface getGameEventMediator() {
-		// TODO Auto-generated method stub
-		return null;
+		if (Objects.isNull(gameEventMediator)) {
+			gameEventMediator = new GameEventMediator(this);
+		}
+		return gameEventMediator;
 	}
 
 	@Override
@@ -88,7 +115,7 @@ public class Game implements GameInterface {
 	}
 
 	@Override
-	public CommandEventBusInterface getEventBus() {
+	public CommandEventBusInterface getCommandEventBus() {
 		if (eventBus == null) {
 			eventBus = new CommandEventBus();
 		}
@@ -99,5 +126,14 @@ public class Game implements GameInterface {
 	public void setGameState() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void startGame(StartGameCommand command) {
+		if (Objects.equals(getGameState(), GameState.INACTIVE)) {
+			getGameEventMediator().startGame(command);
+		}
+		else {
+			// TODO: Throw an UnsupportedOperationException.
+		}
 	}
 }
