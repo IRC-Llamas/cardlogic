@@ -35,7 +35,7 @@ public interface GameInterface {
 	
 	Map<PlayerInterface, Boolean> getPlayers();
 	
-	public CommandEventBusInterface getEventBus();
+	CommandEventBusInterface getCommandEventBus();
 	
 	void setGameState();
 }
