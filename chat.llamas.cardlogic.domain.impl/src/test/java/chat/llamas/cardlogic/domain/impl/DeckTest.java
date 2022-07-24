@@ -11,9 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package chat.llamas.cardlogic.domain;
+package chat.llamas.cardlogic.domain.impl;
 
 import org.junit.jupiter.api.Test;
+
+import chat.llamas.cardlogic.domain.Card;
+import chat.llamas.cardlogic.domain.DeckInterface;
+import chat.llamas.cardlogic.domain.impl.DeckBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
