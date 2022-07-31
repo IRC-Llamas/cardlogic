@@ -14,6 +14,7 @@
 package chat.llamas.cardlogic.game.api;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -31,11 +32,18 @@ public interface GameInterface {
 	
 	GameEventMediatorInterface getGameEventMediator();
 	
-	PlayerInterface getStartingPlayer();
+	default PlayerInterface getStartingPlayer() {
+		if (!Objects.equals(getGameState(), GameState.INACTIVE)) {
+			return getPlayers().entrySet().iterator().next().getKey();
+		}
+		else {
+			throw new UnsupportedOperationException("The game is not currently active.");
+		}
+	}
 	
 	Map<PlayerInterface, Boolean> getPlayers();
 	
 	CommandEventBusInterface getCommandEventBus();
 	
-	void setGameState();
+	void setGameState(GameState gameState);
 }

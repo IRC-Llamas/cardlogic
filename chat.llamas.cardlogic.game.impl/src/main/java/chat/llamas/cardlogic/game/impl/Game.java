@@ -122,9 +122,9 @@ public class Game implements GameInterface {
 	}
 
 	@Override
-	public void setGameState() {
-		// TODO Auto-generated method stub
-		
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
+		getGameStateChangedEvent().onNext(gameState);
 	}
 	
 	private void startGame(StartGameCommand command) {
