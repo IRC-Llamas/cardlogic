@@ -22,28 +22,13 @@ import java.util.Objects;
 
 import javax.naming.OperationNotSupportedException;
 
-import com.beust.jcommander.JCommander;
-
-import chat.llamas.cardlogic.domain.ArgumentTokenizer;
 import chat.llamas.cardlogic.domain.GameState;
-import chat.llamas.cardlogic.domain.commands.BetCommand;
-import chat.llamas.cardlogic.domain.commands.CallCommand;
-import chat.llamas.cardlogic.domain.commands.CancelGameCommand;
-import chat.llamas.cardlogic.domain.commands.CheckCommand;
-import chat.llamas.cardlogic.domain.commands.FoldCommand;
-import chat.llamas.cardlogic.domain.commands.JoinGameCommand;
-import chat.llamas.cardlogic.domain.commands.LeaveGameCommand;
-import chat.llamas.cardlogic.domain.commands.MuckCommand;
-import chat.llamas.cardlogic.domain.commands.RaiseCommand;
-import chat.llamas.cardlogic.domain.commands.ShowCommand;
 import chat.llamas.cardlogic.domain.commands.StartGameCommand;
-import chat.llamas.cardlogic.domain.commands.ViewCardsCommand;
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import chat.llamas.cardlogic.game.api.CommandEventBusInterface;
 import chat.llamas.cardlogic.game.api.GameEventMediatorInterface;
 import chat.llamas.cardlogic.game.api.GameInterface;
 import chat.llamas.cardlogic.game.api.RoundInterface;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
@@ -96,13 +81,7 @@ public class Game implements GameInterface {
 		}
 		return gameEventMediator;
 	}
-
-	@Override
-	public PlayerInterface getStartingPlayer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public Map<PlayerInterface, Boolean> getPlayers() {
 		return players;
@@ -127,12 +106,19 @@ public class Game implements GameInterface {
 		getGameStateChangedEvent().onNext(gameState);
 	}
 	
-	private void startGame(StartGameCommand command) {
+	private void startGame(StartGameCommand command) throws OperationNotSupportedException {
 		if (Objects.equals(getGameState(), GameState.INACTIVE)) {
 			getGameEventMediator().startGame(command);
 		}
 		else {
-			// TODO: Throw an UnsupportedOperationException.
+			throw new OperationNotSupportedException("The game has already started.");
+		}
+	}
+
+	@Override
+	public void close() throws Exception {
+		if (Objects.nonNull(startGameSubscription) && !startGameSubscription.isDisposed()) {
+			startGameSubscription.dispose();
 		}
 	}
 }
