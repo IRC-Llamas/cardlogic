@@ -115,7 +115,7 @@ public class Game implements GameInterface {
 
 	@Override
 	public CommandEventBusInterface getCommandEventBus() {
-		if (eventBus == null) {
+		if (Objects.isNull(eventBus)) {
 			eventBus = new CommandEventBus();
 		}
 		return eventBus;
