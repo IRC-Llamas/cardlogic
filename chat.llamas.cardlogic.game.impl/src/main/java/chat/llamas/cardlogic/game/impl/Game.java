@@ -18,30 +18,20 @@ package chat.llamas.cardlogic.game.impl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.naming.OperationNotSupportedException;
 
-import com.beust.jcommander.JCommander;
-
-import chat.llamas.cardlogic.domain.ArgumentTokenizer;
 import chat.llamas.cardlogic.domain.GameState;
-import chat.llamas.cardlogic.domain.commands.BetCommand;
-import chat.llamas.cardlogic.domain.commands.CallCommand;
-import chat.llamas.cardlogic.domain.commands.CancelGameCommand;
-import chat.llamas.cardlogic.domain.commands.CheckCommand;
-import chat.llamas.cardlogic.domain.commands.FoldCommand;
-import chat.llamas.cardlogic.domain.commands.JoinGameCommand;
-import chat.llamas.cardlogic.domain.commands.LeaveGameCommand;
-import chat.llamas.cardlogic.domain.commands.MuckCommand;
-import chat.llamas.cardlogic.domain.commands.RaiseCommand;
-import chat.llamas.cardlogic.domain.commands.ShowCommand;
 import chat.llamas.cardlogic.domain.commands.StartGameCommand;
-import chat.llamas.cardlogic.domain.commands.ViewCardsCommand;
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import chat.llamas.cardlogic.game.api.CommandEventBusInterface;
 import chat.llamas.cardlogic.game.api.GameEventMediatorInterface;
 import chat.llamas.cardlogic.game.api.GameInterface;
 import chat.llamas.cardlogic.game.api.RoundInterface;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class Game implements GameInterface {
 
@@ -52,30 +42,46 @@ public class Game implements GameInterface {
 	private RoundInterface currentRound = null;
 	
 	private CommandEventBusInterface eventBus = null;
+	
+	private PublishSubject<GameState> gameStateChangedEvent;
+	
+	private GameEventMediatorInterface gameEventMediator = null;
+	
+	private Disposable startGameSubscription = null;
+	
+	{
+		this.startGameSubscription = getCommandEventBus().onCommand(StartGameCommand.class).subscribe(this::startGame);
+	}
 
 	@Override
 	public RoundInterface getCurrentRound() {
-		// TODO Auto-generated method stub
-		return null;
+		return currentRound;
 	}
 
 	@Override
 	public GameState getGameState() {
 		return gameState;
 	}
+	
+	private PublishSubject<GameState> getGameStateChangedEvent() {
+		if (Objects.isNull(gameStateChangedEvent)) {
+			gameStateChangedEvent = PublishSubject.create();
+		}
+		return gameStateChangedEvent;
+	}
+	
+	public Observable<GameState> onGameStateChanged() {
+		return getGameStateChangedEvent();
+	}
 
 	@Override
 	public GameEventMediatorInterface getGameEventMediator() {
-		// TODO Auto-generated method stub
-		return null;
+		if (Objects.isNull(gameEventMediator)) {
+			gameEventMediator = new GameEventMediator(this);
+		}
+		return gameEventMediator;
 	}
-
-	@Override
-	public PlayerInterface getStartingPlayer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public Map<PlayerInterface, Boolean> getPlayers() {
 		return players;
@@ -83,21 +89,36 @@ public class Game implements GameInterface {
 
 	@Override
 	public void acceptCommand(String command) throws OperationNotSupportedException {
-		// TODO Auto-generated method stub
-		
+		getCommandEventBus().execute(command);
 	}
 
 	@Override
-	public CommandEventBusInterface getEventBus() {
-		if (eventBus == null) {
+	public CommandEventBusInterface getCommandEventBus() {
+		if (Objects.isNull(eventBus)) {
 			eventBus = new CommandEventBus();
 		}
 		return eventBus;
 	}
 
 	@Override
-	public void setGameState() {
-		// TODO Auto-generated method stub
-		
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
+		getGameStateChangedEvent().onNext(gameState);
+	}
+	
+	private void startGame(StartGameCommand command) throws OperationNotSupportedException {
+		if (Objects.equals(getGameState(), GameState.INACTIVE)) {
+			getGameEventMediator().startGame(command);
+		}
+		else {
+			throw new OperationNotSupportedException("The game has already started.");
+		}
+	}
+
+	@Override
+	public void close() throws Exception {
+		if (Objects.nonNull(startGameSubscription) && !startGameSubscription.isDisposed()) {
+			startGameSubscription.dispose();
+		}
 	}
 }

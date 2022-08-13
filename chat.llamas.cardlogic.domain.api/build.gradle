@@ -8,6 +8,7 @@
 
 plugins {
     // Apply the java-library plugin for API and implementation separation.
+    id 'eclipse'
     id 'java-library'
     id "org.jetbrains.kotlin.jvm" version "1.7.10"
     id 'org.ec4j.editorconfig' version '0.0.3'
