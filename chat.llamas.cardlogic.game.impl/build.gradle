@@ -50,6 +50,9 @@ dependencies {
 
 	implementation project(':chat.llamas.cardlogic.game.api')
 	implementation project(':chat.llamas.cardlogic.domain.api')
+	
+	//implementation project(':chat.llamas.cardlogic.game.api')
+	implementation 'org.hibernate:hibernate-core-jakarta:5.6.10.Final'
 }
 
 tasks.named('test') {
