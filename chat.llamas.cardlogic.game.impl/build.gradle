@@ -49,7 +49,9 @@ dependencies {
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 
 	implementation project(':chat.llamas.cardlogic.game.api')
+	
 	implementation project(':chat.llamas.cardlogic.domain.api')
+	implementation project(':chat.llamas.cardlogic.domain.impl')
 	
 	//implementation project(':chat.llamas.cardlogic.game.api')
 	implementation 'org.hibernate:hibernate-core-jakarta:5.6.10.Final'
