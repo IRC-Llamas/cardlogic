@@ -22,7 +22,9 @@ public enum RoundType {
 	FLOP(2),
 	TURN(3),
 	RIVER(4),
-	SHOWDOWN(5);
+	SHOWDOWN(5),
+	POST_GAME(6);
+	
 	private int roundIndex;
 	
 	private RoundType(int roundIndex) {

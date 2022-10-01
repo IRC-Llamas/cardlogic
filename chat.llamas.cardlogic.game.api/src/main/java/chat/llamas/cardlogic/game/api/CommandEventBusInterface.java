@@ -14,6 +14,7 @@ import chat.llamas.cardlogic.domain.commands.CheckCommand;
 import chat.llamas.cardlogic.domain.commands.FoldCommand;
 import chat.llamas.cardlogic.domain.commands.JoinGameCommand;
 import chat.llamas.cardlogic.domain.commands.LeaveGameCommand;
+import chat.llamas.cardlogic.domain.commands.MessageCommand;
 import chat.llamas.cardlogic.domain.commands.MuckCommand;
 import chat.llamas.cardlogic.domain.commands.RaiseCommand;
 import chat.llamas.cardlogic.domain.commands.ShowCommand;
@@ -41,6 +42,7 @@ public interface CommandEventBusInterface {
 		BetCommand betCommand = new BetCommand();
 		CheckCommand checkCommand = new CheckCommand();
 		ViewCardsCommand viewCardsCommand = new ViewCardsCommand();
+		MessageCommand messageCommand = new MessageCommand();
 		
 		Map<Class<?>, BaseCommand> classMap = new HashMap<>();
 		classMap.put(StartGameCommand.class, startGameCommand);
@@ -55,6 +57,7 @@ public interface CommandEventBusInterface {
 		classMap.put(BetCommand.class, betCommand);
 		classMap.put(CheckCommand.class, checkCommand);
 		classMap.put(ViewCardsCommand.class, viewCardsCommand);
+		classMap.put(MessageCommand.class, messageCommand);
 		
 		// Admin Commands
 		// TODO: Add here.
@@ -72,6 +75,7 @@ public interface CommandEventBusInterface {
 				.addCommand(betCommand)
 				.addCommand(checkCommand)
 				.addCommand(viewCardsCommand)
+				.addCommand(messageCommand)
 			  .build();
 			jc.parse(argv);		
 

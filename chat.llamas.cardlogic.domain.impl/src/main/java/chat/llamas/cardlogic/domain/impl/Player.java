@@ -14,39 +14,59 @@
 package chat.llamas.cardlogic.domain.impl;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import chat.llamas.cardlogic.domain.game.GameMessageInterface;
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
 import io.reactivex.rxjava3.core.Observable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class Player implements PlayerInterface {
+	
+	@Id
+	@Column
+	private BigInteger id;
+	
+	@Column
 	private String name;
 	
 	// TODO: Change to Moneta's type
 	// See:
 	// https://www.baeldung.com/java-money-and-currency
+	@Column
 	private BigDecimal availableMoney;
 	
+	@Column
 	private int gamesPlayed;
-	
+
+	@Column
 	private int gamesWon;
-	
+
+	@Column
 	private int gamesTied;
-	
+
+	@Column
 	private int gamesLost;
-	
+
+	@Column
 	private BigDecimal totalWinnings;
-	
+
+	@Column
 	private BigDecimal totalLosses;
-	
+
+	@Column
 	private long winningStreak;
-	
+
+	@Column
 	private long bestWinningStreak;
 
+	@Column
 	private long losingStreak;
-	
+
+	@Column
 	private long bestLosingStreak;
 	
 	@Override
@@ -103,26 +123,22 @@ public class Player implements PlayerInterface {
 
 	@Override
 	public long getWinningStreak() {
-		// TODO Auto-generated method stub
-		return 0;
+		return winningStreak;
 	}
 
 	@Override
 	public long getBestWinningStreak() {
-		// TODO Auto-generated method stub
-		return 0;
+		return bestWinningStreak;
 	}
 
 	@Override
 	public long getLosingStreak() {
-		// TODO Auto-generated method stub
-		return 0;
+		return losingStreak;
 	}
 
 	@Override
 	public long getBestLosingStreak() {
-		// TODO Auto-generated method stub
-		return 0;
+		return bestLosingStreak;
 	}
 	
 	
