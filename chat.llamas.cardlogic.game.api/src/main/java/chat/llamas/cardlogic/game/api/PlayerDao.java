@@ -6,7 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import java.math.BigInteger;
 
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
-public class PersonDao {
+public class PlayerDao {
 	   @PersistenceContext
 	   private EntityManager em;
 
