@@ -45,28 +45,23 @@ public interface GameEventMediatorInterface {
 	void sendMessage(MessageCommand command) throws OperationNotSupportedException;
 	
 	default void cancelGame(CancelGameCommand command) throws OperationNotSupportedException {
-		if (getGame().getGameState() == GameState.PENDING) {
-			if (getGame().getStartingPlayer().isPresent()) {
-				RoundInterface round = getGame().getCurrentRound();
-				
-				if (Objects.equals(round.getRoundType(), RoundType.PRE_GAME)) {
-					if (Objects.equals( getGame().getStartingPlayer().get().getName(), command.getDelegate().getPlayerName())) {
-						// TODO: Cancel the game
-					}
-					else {
-						throw new OperationNotSupportedException("Game can only be cancelled by the player who started it.");
-					}
-				}
-				else {
-					throw new OperationNotSupportedException("Game is already in progress.");
-				}
-			}
-			else {
-				throw new OperationNotSupportedException("There is no starting player.");
-			}
-		}
-		else {
+		if (getGame().getGameState() != GameState.PENDING) {
 			throw new OperationNotSupportedException("Game state must be pending to cancel.");
+		} else if (!getGame().getStartingPlayer().isPresent()) {
+			throw new OperationNotSupportedException("There is no starting player.");
+		}
+
+		var round = getGame().getCurrentRound();
+
+		if (!Objects.equals(round.getRoundType(), RoundType.PRE_GAME)) {
+			throw new OperationNotSupportedException("Game is already in progress.");
+		} else if (!Objects.equals( getGame().getStartingPlayer().get().getName(), command.getDelegate().getPlayerName())) {
+			// TODO: Name is probably not the right field to compare here.
+			throw new OperationNotSupportedException("Game can only be cancelled by the player who started it.");
+		} else {
+			// TODO: Cancel the game
+			getGame().setGameState(GameState.INACTIVE);
+			getGame().getPlayers().clear();
 		}
 	}
 
@@ -80,20 +75,15 @@ public interface GameEventMediatorInterface {
 		else if (Objects.equals(getGame().getGameState(), GameState.ACTIVE)) {
 			// Fold the player if they haven't already,
 			// and then remove the player.
-			
-			try {
-				getGame().acceptCommand(
-					String.join(" ",
-						FoldCommand.COMMAND_NAME,
-						CommandDelegate.PLAYER_FLAG_LONG +
-						GameConstants.ARGUMENT_SEPARATOR +
-						command.getDelegate().getPlayerName()));
-				
-				removePlayerFromGame(command);
-			}
-			catch (OperationNotSupportedException e) {
-				throw e;
-			}
+
+			getGame().acceptCommand(
+				String.join(" ",
+					FoldCommand.COMMAND_NAME,
+					CommandDelegate.PLAYER_FLAG_LONG +
+					GameConstants.ARGUMENT_SEPARATOR +
+					command.getDelegate().getPlayerName()));
+
+			removePlayerFromGame(command);
 		}
 		else {
 			throw new OperationNotSupportedException("Game state must be pending or active to leave.");
