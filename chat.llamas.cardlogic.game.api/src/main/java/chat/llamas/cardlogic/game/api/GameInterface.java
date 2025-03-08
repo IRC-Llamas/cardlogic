@@ -14,15 +14,15 @@
 package chat.llamas.cardlogic.game.api;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 import javax.naming.OperationNotSupportedException;
 
 import chat.llamas.cardlogic.domain.GameState;
-import chat.llamas.cardlogic.domain.commands.BaseCommand;
 import chat.llamas.cardlogic.domain.game.PlayerInterface;
-import io.reactivex.rxjava3.core.Observable;
 
-public interface GameInterface {
+public interface GameInterface extends AutoCloseable {
 	void acceptCommand(String command) throws OperationNotSupportedException;
 	
 	RoundInterface getCurrentRound();
@@ -31,11 +31,18 @@ public interface GameInterface {
 	
 	GameEventMediatorInterface getGameEventMediator();
 	
-	PlayerInterface getStartingPlayer();
+	default Optional<PlayerInterface> getStartingPlayer() {
+		if (!Objects.equals(getGameState(), GameState.INACTIVE)) {
+			return Optional.of(getPlayers().entrySet().iterator().next().getKey());
+		}
+		else {
+			return Optional.empty();
+		}
+	}
 	
 	Map<PlayerInterface, Boolean> getPlayers();
 	
-	public CommandEventBusInterface getEventBus();
+	CommandEventBusInterface getCommandEventBus();
 	
-	void setGameState();
+	void setGameState(GameState gameState) throws OperationNotSupportedException;
 }
